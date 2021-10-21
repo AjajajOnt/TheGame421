@@ -5,30 +5,7 @@ using System.Text;
 
 namespace TheGame421
 {
-    public class Monster
+    public class Monster : Player
     {
-        public string Name
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
-        public int Health
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
-        public int AttackPower
-        {
-            get => default;
-            set
-            {
-            }
-        }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TheGame421
 {
-    public class Shop : Player
+    public class LastBoss : Player
     {
     }
 }

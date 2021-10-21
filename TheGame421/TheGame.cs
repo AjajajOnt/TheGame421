@@ -26,5 +26,40 @@ namespace TheGame421
         {
             throw new System.NotImplementedException();
         }
+
+        public void GoAdventure()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Attack()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Shop()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Exit()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Heal()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void GameLevels()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void ShowPlayerInfo()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

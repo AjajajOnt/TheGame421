@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TheGame421
 {
-    public class  Monster : Boss 
+    public class  Boss : Player  
     {
     }
 }
