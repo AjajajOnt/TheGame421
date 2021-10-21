@@ -6,7 +6,10 @@ namespace TheGame421
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            TheGame start = new TheGame();
+
+            start.CreatePlayer();
+            start.GrafiskMenu();
         }
     }
 }

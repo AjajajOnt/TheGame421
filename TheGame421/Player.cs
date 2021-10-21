@@ -142,5 +142,37 @@ namespace TheGame421
             {
             }
         }
+
+        public bool GameLevel1
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public bool GameLevel2
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public bool GameLevel3
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public bool GameLevel4
+        {
+            get => default;
+            set
+            {
+            }
+        }
     }
 }

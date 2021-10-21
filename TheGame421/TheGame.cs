@@ -2,32 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
 namespace TheGame421
 {
     public class TheGame
     {
-        private int IsDead;
-
-        public int Player
+        int HCode = 0;
+        List<Player> Players = new List<Player>();
+        public void CreatePlayer()
         {
-            get => default;
-            set
-            {
-            }
+            Player ThePlayer = new Player();
+            Console.Write("Enter Player Name: ");
+            ThePlayer.Name = Console.ReadLine();
+            HCode = ThePlayer.GetHashCode();
+            Players.Add(ThePlayer);
         }
 
-        public void Menu()
-        {
-            throw new System.NotImplementedException();
-        }
 
         public void GameOver()
         {
             throw new System.NotImplementedException();
         }
 
-        public void GoAdventure()
+        public void GoAdventureChoice()
         {
             throw new System.NotImplementedException();
         }
@@ -37,17 +35,17 @@ namespace TheGame421
             throw new System.NotImplementedException();
         }
 
-        public void Shop()
+        public void ShopChoice()
         {
             throw new System.NotImplementedException();
         }
 
-        public void Exit()
+        public void ExitChoice()
         {
             throw new System.NotImplementedException();
         }
 
-        public void Heal()
+        public void HealChoice()
         {
             throw new System.NotImplementedException();
         }
@@ -59,7 +57,49 @@ namespace TheGame421
 
         public void ShowPlayerInfo()
         {
+
+            for (int i = 0; i < Players.Count; i++)
+            {
+                Console.WriteLine(Players[i].Name);
+
+            }
+
+
+
+        }
+
+
+        public void CreateMonster()
+        {
             throw new System.NotImplementedException();
+        }
+
+        public void CreateBoss()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void CreateLastBoss()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void GrafiskMenu()
+        {
+            Console.WriteLine("***********************************************************************");
+            Console.WriteLine("*|                                                                   |*");
+            Console.WriteLine("*|                        1.    Go Adventure                         |*");
+            Console.WriteLine("*|                                                                   |*");
+            Console.WriteLine("*|                        2.    Heal                                 |*");
+            Console.WriteLine("*|                                                                   |*");
+            Console.WriteLine("*|                        3.    Shop                                 |*");
+            Console.WriteLine("*|                                                                   |*");
+            Console.WriteLine("*|                        4.    Exit                                 |*");
+            Console.WriteLine("*|                                                                   |*");
+            Console.WriteLine("*|                                                                   |*");
+            Console.WriteLine("*|                                                                   |*");
+            Console.WriteLine("***********************************************************************");
+            ShowPlayerInfo();
         }
     }
 }
