@@ -76,7 +76,21 @@ namespace TheGame421
         public void ShopChoice()
         {
             TextGrapics("Welcome to the shop");
-            BuyStuff();
+            Console.WriteLine("         1. Buy items");
+            Console.WriteLine("         2. Sell items");
+            Console.WriteLine("         3. Exit");
+            Console.Write("Enter your choice: ");
+            choice = int.Parse(Console.ReadLine());
+            switch (choice)
+            {
+                case 1:
+                    BuyStuff();
+                    break;
+                case 2:
+                    SellStuff();
+                    break;
+            }
+
         }
 
         public void ExitChoice()
@@ -239,6 +253,7 @@ namespace TheGame421
             {
                 Console.WriteLine("    4. Healing Potion.       Price: 100");
             }
+                Console.WriteLine("    4. Exit");
             Console.WriteLine("             Shop Gold: " + Shops[0].Gold);
             Console.Write("Enter item number you wanna buy: ");
             choice = int.Parse(Console.ReadLine());
@@ -280,7 +295,61 @@ namespace TheGame421
 
         public void SellStuff()
         {
-            throw new System.NotImplementedException();
+            TextGrapics("What do you want to Sell?");
+            if (Players[0].AmuletOfStrength.Equals(true))
+            {
+                Console.WriteLine("    1. Amulet Of Strength.   Price: 100");
+            }
+            if (Players[0].AmuletOfToughness.Equals(true))
+            {
+                Console.WriteLine("    2. Amulet Of Toughness.  Price: 100");
+            }
+            if (Players[0].HealingPotion.Equals(true))
+            {
+                Console.WriteLine("    3. Healing Sword.        Price: 100");
+            }
+            if (Players[0].HealingSword.Equals(true))
+            {
+                Console.WriteLine("    4. Healing Potion.       Price: 100");
+            }
+                Console.WriteLine("    4. Exit");
+            Console.WriteLine("             Shop Gold: " + Shops[0].Gold);
+            Console.Write("Enter item number you wanna Sell: ");
+            choice = int.Parse(Console.ReadLine());
+            if (choice == 1 && Players[0].AmuletOfStrength.Equals(true) && Shops[0].Gold >= 100)
+            {
+                Players[0].AmuletOfStrength = false;
+                Shops[0].AmuletOfStrength = true;
+                Shops[0].Gold -= 100;
+                Players[0].Gold += 100;
+
+            }
+            if (choice == 2 && Players[0].AmuletOfToughness.Equals(true) && Shops[0].Gold >= 100)
+            {
+                Players[0].AmuletOfToughness = false;
+                Shops[0].AmuletOfToughness = true;
+                Shops[0].Gold -= 100;
+                Players[0].Gold += 100;
+
+            }
+            if (choice == 3 && Players[0].HealingPotion.Equals(true) && Shops[0].Gold >= 100)
+            {
+                Players[0].HealingPotion = false;
+                Shops[0].HealingPotion = true;
+                Shops[0].Gold -= 100;
+                Players[0].Gold += 100;
+
+            }
+            if (choice == 4 && Players[0].HealingSword.Equals(true) && Shops[0].Gold >= 100)
+            {
+                Players[0].HealingSword = false;
+                Shops[0].HealingSword = true;
+                Shops[0].Gold -= 100;
+                Players[0].Gold += 100;
+
+
+            }
+
         }
     }
 }
