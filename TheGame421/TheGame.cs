@@ -10,6 +10,7 @@ namespace TheGame421
     {
         
         int HCode = 0;
+        int choice = 0;
         int chance = 0;
         string input = "";
         List<Player> Players = new List<Player>();
@@ -24,6 +25,7 @@ namespace TheGame421
             TheShop.Gold = 500;
             TheShop.HealingPotion = true;
             TheShop.HealingSword = true;
+            Shops.Add(TheShop);
 
         }
         public void CreatePlayer()
@@ -36,7 +38,7 @@ namespace TheGame421
             ThePlayer.MaxHealth = 100;
             ThePlayer.Level = 1;
             ThePlayer.Exp = 1;
-            ThePlayer.Gold = 5;
+            ThePlayer.Gold = 500;
             HCode = ThePlayer.GetHashCode();
             Players.Add(ThePlayer);
             Console.Clear();
@@ -74,6 +76,7 @@ namespace TheGame421
         public void ShopChoice()
         {
             TextGrapics("Welcome to the shop");
+            BuyStuff();
         }
 
         public void ExitChoice()
@@ -215,6 +218,69 @@ namespace TheGame421
             Console.WriteLine("***********************************************************");
             Console.WriteLine("*                     "   + text                            );
             Console.WriteLine("***********************************************************");
+        }
+
+        public void BuyStuff()
+        {
+            TextGrapics("What do you want to buy?");
+            if (Shops[0].AmuletOfStrength.Equals(true))
+            {
+                Console.WriteLine("    1. Amulet Of Strength.   Price: 100");
+            }
+            if (Shops[0].AmuletOfToughness.Equals(true))
+            {
+                Console.WriteLine("    2. Amulet Of Toughness.  Price: 100");
+            }
+            if (Shops[0].HealingPotion.Equals(true))
+            {
+                Console.WriteLine("    3. Healing Sword.        Price: 100");
+            }
+            if (Shops[0].HealingSword.Equals(true))
+            {
+                Console.WriteLine("    4. Healing Potion.       Price: 100");
+            }
+            Console.WriteLine("             Shop Gold: " + Shops[0].Gold);
+            Console.Write("Enter item number you wanna buy: ");
+            choice = int.Parse(Console.ReadLine());
+            if (choice == 1 && Shops[0].AmuletOfStrength.Equals(true) && Players[0].Gold >= 100)
+            {
+                Shops[0].AmuletOfStrength = false;
+                Players[0].AmuletOfStrength = true;
+                Players[0].Gold -= 100;
+                Shops[0].Gold += 100;
+
+            }
+            if (choice == 2 && Shops[0].AmuletOfToughness.Equals(true) && Players[0].Gold >= 100)
+            {
+                Shops[0].AmuletOfToughness = false;
+                Players[0].AmuletOfToughness = true;
+                Players[0].Gold -= 100;
+                Shops[0].Gold += 100;
+
+            }
+            if (choice == 3 && Shops[0].HealingPotion.Equals(true) && Players[0].Gold >=100)
+            {
+                Shops[0].HealingPotion = false;
+                Players[0].HealingPotion = true;
+                Players[0].Gold -= 100;
+                Shops[0].Gold += 100;
+
+            }
+            if (choice == 4 && Shops[0].HealingSword.Equals(true) && Players[0].Gold >= 100)
+            {
+                Shops[0].HealingSword = false;
+                Players[0].HealingSword = true;
+                Players[0].Gold -= 100;
+                Shops[0].Gold += 100;
+
+
+            }
+
+        }
+
+        public void SellStuff()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
