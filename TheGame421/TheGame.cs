@@ -136,6 +136,20 @@ namespace TheGame421
 
 
         }
+        public void ShowPlayerInfo2()
+        {
+
+            Console.WriteLine("* Name: " + Players[0].Name);
+            Console.WriteLine("* Level: " + Players[0].Level);
+            Console.WriteLine("* Hp: " + Players[0].Health+"/"+ Players[0].MaxHealth);
+            Console.WriteLine("* Exp: " + Players[0].Exp+ "/" + 20);
+            Console.WriteLine("* Gold: " + Players[0].Gold);
+            Console.WriteLine("* Strength: " + Players[0].Strength);
+            Console.WriteLine("* Toughness: " + Players[0].Toughness);
+
+            PressSomething();
+
+        }
 
 
         public void CreateMonster()
@@ -163,15 +177,15 @@ namespace TheGame421
         {
             Console.WriteLine("***********************************************************************");
             Console.WriteLine("*|                                                                   |*");
-            Console.WriteLine("*|                        1.    Go Adventure                         |*");
+            Console.WriteLine("*|                        1.    Go Adventuring                       |*");
             Console.WriteLine("*|                                                                   |*");
-            Console.WriteLine("*|                        2.    Heal                                 |*");
+            Console.WriteLine("*|                        2.    Show details about your character    |*");
             Console.WriteLine("*|                                                                   |*");
-            Console.WriteLine("*|                        3.    Shop                                 |*");
+            Console.WriteLine("*|                        3.    Go to Shop                           |*");
             Console.WriteLine("*|                                                                   |*");
-            Console.WriteLine("*|                        4.    Exit                                 |*");
+            Console.WriteLine("*|                        4.    Heal                                 |*");
             Console.WriteLine("*|                                                                   |*");
-            Console.WriteLine("*|                                                                   |*");
+            Console.WriteLine("*|                        5.    Exit                                 |*");
             Console.WriteLine("*|                                                                   |*");
             Console.WriteLine("***********************************************************************");
             ShowPlayerInfo();
@@ -205,6 +219,7 @@ namespace TheGame421
                         Console.WriteLine(Monsters[0].Name + " Took a hit and Has " + Monsters[0].Health + " Left");
 
                     }
+                    PressSomething();
                 }
             }
             if (Players[0].Health > 0)
@@ -350,6 +365,12 @@ namespace TheGame421
 
             }
 
+        }
+
+        public void PressSomething()
+        {
+            Console.WriteLine("[Enter to continue.]");
+            Console.ReadKey();
         }
     }
 }

@@ -13,6 +13,7 @@ namespace TheGame421
             start.CreatePlayer();
             while (true)
             {
+                Console.Clear();
                 start.GraphicMeny();
                 Console.Write("Enter Choice: ");
                 try
@@ -33,7 +34,7 @@ namespace TheGame421
 
                         break;
                     case 2:
-                        start.HealChoice();
+                        start.ShowPlayerInfo2();
                         break;
                     case 3:
                         start.ShopChoice();
