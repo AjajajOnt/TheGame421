@@ -7,172 +7,52 @@ namespace TheGame421
 {
     public class Player
     {
-        public string Name
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public string Name { get; set; }
 
-        public int Health
-        {
-            get => default;
-            set
-            {
-            }
-        }
 
-        public int Exp
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int Health { get; set; }
 
-        public int Level
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int Exp { get; set; }
 
-        public int Gold
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int Level { get; set; }
 
-        public bool PlayerBool
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int Gold { get; set; }
 
-        public bool AmuletOfStrength
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public bool PlayerBool { get; set; }
 
-        public bool AmuletOfToughness
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public bool AmuletOfStrength { get; set; }
 
-        public bool HealingPotion
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public bool AmuletOfToughness { get; set; }
 
-        public bool HealingSword
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public bool HealingPotion { get; set; }
 
-        public int Strength
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public bool HealingSword { get; set; }
 
-        public int Toughness
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int Strength { get; set; }
 
-        public bool Monster
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int Toughness { get; set; }
 
-        public bool Boss
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public bool Monster { get; set; }
 
-        public int LastBoss
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public bool Boss { get; set; }
 
-        public int PotionAmount
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int LastBoss { get; set; }
 
-        public bool IsDead
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int PotionAmount { get; set; }
 
-        public bool GameLevel1
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public bool IsDead { get; set; }
 
-        public bool GameLevel2
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public bool GameLevel1 { get; set; }
 
-        public bool GameLevel3
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public bool GameLevel2 { get; set; }
 
-        public bool GameLevel4
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public bool GameLevel3 { get; set; }
+
+        public bool GameLevel4 { get; set; }
+
+        public int MaxHealth { get; set; }
+        
+
+        
     }
-}
+    }
