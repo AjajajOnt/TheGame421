@@ -9,6 +9,7 @@ namespace TheGame421
         {
             int MenuChoice = 0;
             TheGame start = new TheGame();
+            start.CreateShop();
             start.CreatePlayer();
             while (true)
             {
@@ -27,8 +28,8 @@ namespace TheGame421
                 {
                     
                     case 1:
-                        //start.GoAdventureChoice();
-                        start.Fight();
+                        start.GoAdventureChoice();
+                        //start.Fight();
 
                         break;
                     case 2:

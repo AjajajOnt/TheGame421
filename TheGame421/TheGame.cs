@@ -14,6 +14,18 @@ namespace TheGame421
         string input = "";
         List<Player> Players = new List<Player>();
         List<Monster> Monsters = new List<Monster>();
+        List<Shop> Shops = new List<Shop>();
+
+        internal void CreateShop()
+        {
+            Shop TheShop = new Shop();
+            TheShop.AmuletOfStrength = true;
+            TheShop.AmuletOfToughness = true;
+            TheShop.Gold = 500;
+            TheShop.HealingPotion = true;
+            TheShop.HealingSword = true;
+
+        }
         public void CreatePlayer()
         {
             Player ThePlayer = new Player();
@@ -39,10 +51,14 @@ namespace TheGame421
         public void GoAdventureChoice()
         {
             var Ran = new Random();
-
-            if (true)
+            chance = Ran.Next(1, 100);
+            if (chance >= 90 )
             {
-
+                Console.WriteLine("Grass");
+            }
+            else
+            {
+                Fight();
             }
             
         }
@@ -57,7 +73,7 @@ namespace TheGame421
 
         public void ShopChoice()
         {
-            throw new System.NotImplementedException();
+            TextGrapics("Welcome to the shop");
         }
 
         public void ExitChoice()
