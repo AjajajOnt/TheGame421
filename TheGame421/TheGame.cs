@@ -8,7 +8,9 @@ namespace TheGame421
 {
     public class TheGame
     {
+        
         int HCode = 0;
+        int chance = 0;
         string input = "";
         List<Player> Players = new List<Player>();
         List<Monster> Monsters = new List<Monster>();
@@ -36,7 +38,13 @@ namespace TheGame421
 
         public void GoAdventureChoice()
         {
-            throw new System.NotImplementedException();
+            var Ran = new Random();
+
+            if (true)
+            {
+
+            }
+            
         }
 
         public int Attack()
@@ -67,6 +75,19 @@ namespace TheGame421
             if(Players[0].Level >= 9)
             {
                 TextGrapics("Game Level: Dead Kings Dungeon");
+            }
+            else if (Players[0].Level >= 6)
+            {
+                TextGrapics("Game Level: Abandoned Castle");
+            }
+            else if (Players[0].Level >= 3)
+            {
+                TextGrapics("Game Level: Empty Gold Mine");
+            }
+            else 
+            {
+                TextGrapics("Game Level: Abandoned Town");
+
             }
         }
 
@@ -135,8 +156,10 @@ namespace TheGame421
 
         public void Fight()
         {
+            Console.Clear();
             CreateMonster();
-            Console.WriteLine(Monsters[0].Name + "Has appeared " + "with healthamount: " + Monsters[0].Health);
+            GameLevels();
+            Console.WriteLine(Monsters[0].Name + " Has appeared " + "with healthamount: " + Monsters[0].Health);
             while (Monsters[0].Health > 0 && Players[0].Health > 0)
             {
                 if (Monsters[0].Health > 0)
@@ -174,7 +197,7 @@ namespace TheGame421
         public void TextGrapics(string text)
         {
             Console.WriteLine("***********************************************************");
-            Console.WriteLine("*                     "   + text +       "                *");
+            Console.WriteLine("*                     "   + text                            );
             Console.WriteLine("***********************************************************");
         }
     }
