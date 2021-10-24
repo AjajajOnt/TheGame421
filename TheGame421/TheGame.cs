@@ -10,9 +10,9 @@ namespace TheGame421
     {
         
         int HCode = 0;
-        int choice = 0;
-        int chance = 0;
-        string input = "";
+        int Choice= 0;
+        int Chance = 0;
+        string Input = "";
         List<Player> Players = new List<Player>();
         List<Monster> Monsters = new List<Monster>();
         List<Shop> Shops = new List<Shop>();
@@ -53,8 +53,8 @@ namespace TheGame421
         public void GoAdventureChoice()
         {
             var Ran = new Random();
-            chance = Ran.Next(1, 100);
-            if (chance >= 90 )
+            Chance = Ran.Next(1, 100);
+            if (Chance >= 90 )
             {
                 Console.WriteLine("Grass");
             }
@@ -65,10 +65,23 @@ namespace TheGame421
             
         }
 
-        public int Attack()
+        public int PlayerAttack()
         {
             int damage = 0;
-            damage = 5;
+
+            Players[0].Damage = Players[0].Health / 5;
+            if (Players[0].AmuletOfStrength.Equals(true))
+            {
+                Players[0].Damage += 5;
+
+            }
+            if (Players[0].AmuletOfToughness.Equals(true))
+            {
+
+            }
+
+            
+            damage = Players[0].Damage;
 
             return damage;
         }
@@ -80,8 +93,8 @@ namespace TheGame421
             Console.WriteLine("         2. Sell items");
             Console.WriteLine("         3. Exit");
             Console.Write("Enter your choice: ");
-            choice = int.Parse(Console.ReadLine());
-            switch (choice)
+            Choice = int.Parse(Console.ReadLine());
+            switch (Choice)
             {
                 case 1:
                     BuyStuff();
@@ -211,12 +224,12 @@ namespace TheGame421
             {
                 if (Monsters[0].Health > 0)
                 {
-                    Players[0].Health -= Attack();
-                    Console.WriteLine(Players[0].Name + " Took a hit and Has " + Players[0].Health + " Left");
-                    if (Players[0].Health > 0)
+                    Players[0].Health -= MonsterAttack();
+                    Console.WriteLine(Players[0].Name + " Took " + MonsterAttack() + " damage and Has " + Players[0].Health + " Left");
+                    if (Monsters[0].Health > 0)
                     {
-                        Monsters[0].Health -=  Attack();
-                        Console.WriteLine(Monsters[0].Name + " Took a hit and Has " + Monsters[0].Health + " Left");
+                        Monsters[0].Health -= PlayerAttack();
+                        Console.WriteLine(Monsters[0].Name + " Took " + PlayerAttack() +  " damage and Has " + Monsters[0].Health + " Left");
 
                     }
                     PressSomething();
@@ -271,24 +284,26 @@ namespace TheGame421
                 Console.WriteLine("    4. Exit");
             Console.WriteLine("             Shop Gold: " + Shops[0].Gold);
             Console.Write("Enter item number you wanna buy: ");
-            choice = int.Parse(Console.ReadLine());
-            if (choice == 1 && Shops[0].AmuletOfStrength.Equals(true) && Players[0].Gold >= 100)
+            Choice = int.Parse(Console.ReadLine());
+            if (Choice == 1 && Shops[0].AmuletOfStrength.Equals(true) && Players[0].Gold >= 100)
             {
                 Shops[0].AmuletOfStrength = false;
                 Players[0].AmuletOfStrength = true;
+                Players[0].Strength += 5;
                 Players[0].Gold -= 100;
                 Shops[0].Gold += 100;
 
             }
-            if (choice == 2 && Shops[0].AmuletOfToughness.Equals(true) && Players[0].Gold >= 100)
+            if (Choice == 2 && Shops[0].AmuletOfToughness.Equals(true) && Players[0].Gold >= 100)
             {
                 Shops[0].AmuletOfToughness = false;
                 Players[0].AmuletOfToughness = true;
+                Players[0].Toughness += 2;
                 Players[0].Gold -= 100;
                 Shops[0].Gold += 100;
 
             }
-            if (choice == 3 && Shops[0].HealingPotion.Equals(true) && Players[0].Gold >=100)
+            if (Choice == 3 && Shops[0].HealingPotion.Equals(true) && Players[0].Gold >=100)
             {
                 Shops[0].HealingPotion = false;
                 Players[0].HealingPotion = true;
@@ -296,7 +311,7 @@ namespace TheGame421
                 Shops[0].Gold += 100;
 
             }
-            if (choice == 4 && Shops[0].HealingSword.Equals(true) && Players[0].Gold >= 100)
+            if (Choice == 4 && Shops[0].HealingSword.Equals(true) && Players[0].Gold >= 100)
             {
                 Shops[0].HealingSword = false;
                 Players[0].HealingSword = true;
@@ -330,24 +345,26 @@ namespace TheGame421
                 Console.WriteLine("    4. Exit");
             Console.WriteLine("             Shop Gold: " + Shops[0].Gold);
             Console.Write("Enter item number you wanna Sell: ");
-            choice = int.Parse(Console.ReadLine());
-            if (choice == 1 && Players[0].AmuletOfStrength.Equals(true) && Shops[0].Gold >= 100)
+            Choice = int.Parse(Console.ReadLine());
+            if (Choice == 1 && Players[0].AmuletOfStrength.Equals(true) && Shops[0].Gold >= 100)
             {
                 Players[0].AmuletOfStrength = false;
+                Players[0].Strength -= 5;
                 Shops[0].AmuletOfStrength = true;
                 Shops[0].Gold -= 100;
                 Players[0].Gold += 100;
 
             }
-            if (choice == 2 && Players[0].AmuletOfToughness.Equals(true) && Shops[0].Gold >= 100)
+            if (Choice == 2 && Players[0].AmuletOfToughness.Equals(true) && Shops[0].Gold >= 100)
             {
                 Players[0].AmuletOfToughness = false;
+                Players[0].Toughness -= 2;
                 Shops[0].AmuletOfToughness = true;
                 Shops[0].Gold -= 100;
                 Players[0].Gold += 100;
 
             }
-            if (choice == 3 && Players[0].HealingPotion.Equals(true) && Shops[0].Gold >= 100)
+            if (Choice == 3 && Players[0].HealingPotion.Equals(true) && Shops[0].Gold >= 100)
             {
                 Players[0].HealingPotion = false;
                 Shops[0].HealingPotion = true;
@@ -355,7 +372,7 @@ namespace TheGame421
                 Players[0].Gold += 100;
 
             }
-            if (choice == 4 && Players[0].HealingSword.Equals(true) && Shops[0].Gold >= 100)
+            if (Choice == 4 && Players[0].HealingSword.Equals(true) && Shops[0].Gold >= 100)
             {
                 Players[0].HealingSword = false;
                 Shops[0].HealingSword = true;
@@ -371,6 +388,27 @@ namespace TheGame421
         {
             Console.WriteLine("[Enter to continue.]");
             Console.ReadKey();
+        }
+
+        public int MonsterAttack()
+        {
+            int damage = 0;
+
+            Monsters[0].Damage = Players[0].Health / 5;
+            if (Monsters[0].AmuletOfStrength.Equals(true))
+            {
+                Monsters[0].Damage += 5;
+
+            }
+            if (Monsters[0].AmuletOfToughness.Equals(true))
+            {
+
+            }
+
+
+            damage = Monsters[0].Damage;
+
+            return damage;
         }
     }
 }

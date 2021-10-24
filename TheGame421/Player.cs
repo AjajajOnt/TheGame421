@@ -51,8 +51,23 @@ namespace TheGame421
         public bool GameLevel4 { get; set; }
 
         public int MaxHealth { get; set; }
-        
 
-        
+        public int Damage { get; set; }
+
+        public int AmuletOfStrengthAmount
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public int AmuletOToughnessAmount
+        {
+            get => default;
+            set
+            {
+            }
+        }
     }
     }
