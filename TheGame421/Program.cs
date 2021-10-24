@@ -40,7 +40,7 @@ namespace TheGame421
                         start.ShopChoice();
                         break;
                     case 4:
-                        start.ExitChoice();
+                        start.HealChoice();
                         break;
                     case 5:
                         start.GameLevels();

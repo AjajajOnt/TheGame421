@@ -54,20 +54,9 @@ namespace TheGame421
 
         public int Damage { get; set; }
 
-        public int AmuletOfStrengthAmount
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int AmuletOfStrengthAmount { get; set; }
 
-        public int AmuletOToughnessAmount
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int AmuletOfToughnessAmount { get; set; }
+        public int MaxExpThisLevel { get; set; }
     }
     }
