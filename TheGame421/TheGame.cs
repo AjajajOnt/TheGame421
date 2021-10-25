@@ -167,7 +167,7 @@ namespace TheGame421
             else 
             {
                 TextGrapics("Game Level: Abandoned Town");
-
+                
             }
         }
 
@@ -209,11 +209,6 @@ namespace TheGame421
             NewMonster.Exp = Ran.Next(Players[0].Level + 3, Players[0].Level + 7);
             NewMonster.Monster = true;
             Monsters.Add(NewMonster);
-        }
-
-        public void CreateBoss()
-        {
-            throw new System.NotImplementedException();
         }
 
         public void CreateLastBoss(string MonsterName)
@@ -367,16 +362,12 @@ namespace TheGame421
             {
                 Console.WriteLine("    2. Amulet Of Toughness. " + Shops[0].AmuletOfToughnessAmount + " Left.  Price: 100");
             }
+                    
             if (Shops[0].HealingSword.Equals(true))
             {
-                Console.WriteLine("    3. Healing Potion.      " + Shops[0].PotionAmount + " Left.  Price: 100");
-                
+                Console.WriteLine("    3. Healing Sword.                Price: 100");
             }
-            if (Shops[0].HealingPotion.Equals(true))
-            {
-                Console.WriteLine("    4. Healing Sword.                Price: 100");
-            }
-                Console.WriteLine("    5. Exit");
+                Console.WriteLine("    4. Exit");
             Console.WriteLine("             Shop Gold: " + Shops[0].Gold);
             Console.Write("Enter item number you wanna buy: ");
             Choice = int.Parse(Console.ReadLine());
@@ -412,22 +403,8 @@ namespace TheGame421
                 Shops[0].Gold += 100;
 
             }
-            if (Choice == 3 && Shops[0].HealingPotion.Equals(true) && Players[0].Gold >=100)
-            {
-                Shops[0].PotionAmount -= 1;
 
-                if (Shops[0].PotionAmount <= 0)
-                {
-                    Shops[0].HealingPotion = false;
-                }
-
-                Players[0].HealingPotion = true;
-                Players[0].PotionAmount += 1;
-                Players[0].Gold -= 100;
-                Shops[0].Gold += 100;
-
-            }
-            if (Choice == 4 && Shops[0].HealingSword.Equals(true) && Players[0].Gold >= 100)
+            if (Choice == 3 && Shops[0].HealingSword.Equals(true) && Players[0].Gold >= 100)
             {
                 Shops[0].HealingSword = false;
                 Players[0].HealingSword = true;
@@ -454,11 +431,7 @@ namespace TheGame421
             {
                 Console.WriteLine("    3. Healing Sword.                Price: 100");
             }
-            if (Players[0].HealingPotion.Equals(true))
-            {
-                Console.WriteLine("    4. Healing Potion.      " + Players[0].PotionAmount + " Left.  Price: 100");
-            }
-            Console.WriteLine("    4. Exit");
+                Console.WriteLine("    4. Exit");
             Console.WriteLine("             Shop Gold: " + Shops[0].Gold);
             Console.Write("Enter item number you wanna Sell: ");
             Choice = int.Parse(Console.ReadLine());
@@ -495,21 +468,9 @@ namespace TheGame421
                 Players[0].Gold += 100;
 
             }
-            if (Choice == 3 && Players[0].HealingPotion.Equals(true) && Shops[0].Gold >= 100 && Players[0].PotionAmount >= 1)
-            {
-                Players[0].PotionAmount -= 1;
 
-                if (Players[0].PotionAmount <= 0)
-                {
-                    Players[0].HealingPotion = false;
-                }
-                Shops[0].PotionAmount += 1;
-                Shops[0].HealingPotion = true;
-                Shops[0].Gold -= 100;
-                Players[0].Gold += 100;
-
-            }
-            if (Choice == 4 && Players[0].HealingSword.Equals(true) && Shops[0].Gold >= 100)
+            
+            if (Choice == 3 && Players[0].HealingSword.Equals(true) && Shops[0].Gold >= 100)
             {
                 Players[0].HealingSword = false;
                 Shops[0].HealingSword = true;
@@ -534,25 +495,31 @@ namespace TheGame421
 
             if (Monsters[0].Monster.Equals(true))
             {
-                Monsters[0].Damage = (((Players[0].MaxHealth / 6) + (Players[0].Level * 5)) * (Players[0].Toughness / 10)) - (Players[0].MaxHealth / 6) + (Players[0].Level * 5);
-                Console.WriteLine(Players[0].Name + " Took " + damage + " damage and Has " + Players[0].Health + "Health Left");
+                Monsters[0].Damage = ((Players[0].MaxHealth / 6) + (Players[0].Level * 5) - ((Players[0].MaxHealth / 6) + (Players[0].Level * 5)) * (Players[0].Toughness / 10)) ;
                 damage = Ran.Next(Monsters[0].Damage / 3, Monsters[0].Damage);
+                Players[0].Health -= damage;
+                Console.WriteLine(Players[0].Name + " Took " + damage + " damage and Has " + Players[0].Health + "Health Left");
+                
 
             }
             if (Monsters[0].EliteMonster.Equals(true))
             {
-                Monsters[0].Damage = (((Players[0].MaxHealth / 5) + (Players[0].Level * 6)) * (Players[0].Toughness / 10)) - (Players[0].MaxHealth / 5) + (Players[0].Level * 6);
-                Console.WriteLine(Players[0].Name + " Took " + damage + " damage and Has " + Players[0].Health + "Health Left");
+                Monsters[0].Damage = ( (Players[0].MaxHealth / 5) + (Players[0].Level * 6) - ((Players[0].MaxHealth / 5) + (Players[0].Level * 6)) * (Players[0].Toughness / 10));
                 damage = Ran.Next(Monsters[0].Damage / 3, Monsters[0].Damage);
+                Players[0].Health -= damage;
+                Console.WriteLine(Players[0].Name + " Took " + damage + " damage and Has " + Players[0].Health + "Health Left");
+
             }
-            if(Monsters[0].LastBoss.Equals(true))
+            if (Monsters[0].LastBoss.Equals(true))
             {
-                Monsters[0].Damage = ((Players[0].MaxHealth / 3) * (Players[0].Toughness / 10)) - Players[0].MaxHealth / 3;
-                Console.WriteLine(Players[0].Name + " Took " + damage + " damage and Has " + Players[0].Health + "Health Left");
+                Monsters[0].Damage = ( (Players[0].MaxHealth / 3) - (Players[0].MaxHealth / 3) * (Players[0].Toughness / 10)) ;
                 damage = Ran.Next(Monsters[0].Damage / 3, Monsters[0].Damage);
+                Players[0].Health -= damage;
+                Console.WriteLine(Players[0].Name + " Took " + damage + " damage and Has " + Players[0].Health + "Health Left");
+
             }
 
- 
+
         }
 
         public int SpendGold(int GoldAmount)
