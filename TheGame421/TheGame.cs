@@ -14,7 +14,7 @@ namespace TheGame421
         int Chance = 0;
         string Input = "";
         List<Player> Players = new List<Player>();
-        List<Monster> Monsters = new List<Monster>();
+        List<SpecificMonster> Monsters = new List<SpecificMonster>();
         List<Shop> Shops = new List<Shop>();
 
         internal void CreateShop()
@@ -69,27 +69,40 @@ namespace TheGame421
             
         }
 
-        public int PlayerAttack()
+        public void PlayerAttack()
         {
             int damage = 0;
             var Ran = new Random();
             
-            Players[0].Damage = Players[0].MaxHealth / 5;
-            if (Players[0].AmuletOfStrength.Equals(true))
-            {
 
+            if (Players[0].HealingSword.Equals(true))
+            {
+                Players[0].Damage = Players[0].MaxHealth / 5;
                 Players[0].Damage = (Players[0].Strength / 10 * Players[0].Damage) + Players[0].Damage;
-
+                damage = Ran.Next(Players[0].Damage / 2, Players[0].Damage);
+                Monsters[0].Health -= damage;
+                Players[0].Health += damage / 2;
+                if (Players[0].Health >= Players[0].MaxHealth)
+                {
+                    Players[0].Health = Players[0].MaxHealth;
+                }
+                Console.WriteLine(Monsters[0].Name + " Took " + damage + " damage and Has " + Monsters[0].Health + " Health Left");
+                Console.WriteLine("Your sword heals you for " + damage / 2 + " Health");
             }
-            if (Players[0].AmuletOfToughness.Equals(true))
+            else
             {
+                Players[0].Damage = Players[0].MaxHealth / 5;
+                Players[0].Damage = (Players[0].Strength / 10 * Players[0].Damage) + Players[0].Damage;
+                damage = Ran.Next(Players[0].Damage / 2, Players[0].Damage);
+                Monsters[0].Health -= damage;
+                Console.WriteLine(Monsters[0].Name + " Took " + damage + " damage and Has " + Monsters[0].Health + "Health Left");
 
             }
+                
 
+            
 
-            damage = Ran.Next(Players[0].Damage / 2, Players[0].Damage);
-
-            return damage;
+            
         }
 
         public void ShopChoice()
@@ -186,14 +199,15 @@ namespace TheGame421
         }
 
 
-        public void CreateMonster()
+        public void CreateMonster(string MonsterName)
         {
-            Monster NewMonster = new Monster();
+            SpecificMonster NewMonster = new SpecificMonster();
             var Ran = new Random();
-            NewMonster.Name = RandomName();
+            NewMonster.Name = MonsterName;
             NewMonster.Health = Players[0].MaxHealth / 3;
             NewMonster.Gold = Ran.Next(Players[0].Level, Players[0].Level + 3);
             NewMonster.Exp = Ran.Next(Players[0].Level + 3, Players[0].Level + 7);
+            NewMonster.Monster = true;
             Monsters.Add(NewMonster);
         }
 
@@ -202,9 +216,16 @@ namespace TheGame421
             throw new System.NotImplementedException();
         }
 
-        public void CreateLastBoss()
+        public void CreateLastBoss(string MonsterName)
         {
-            throw new System.NotImplementedException();
+            SpecificMonster NewMonster = new SpecificMonster();
+            var Ran = new Random();
+            NewMonster.Name = MonsterName;
+            NewMonster.Health = Players[0].MaxHealth * 2;
+            NewMonster.LastBoss = true;
+            NewMonster.Gold = Ran.Next(1000);
+            NewMonster.Exp = Ran.Next(1000);
+            Monsters.Add(NewMonster);
         }
 
         public void GraphicMeny()
@@ -225,32 +246,82 @@ namespace TheGame421
             ShowPlayerInfo();
         }
 
-        public string RandomName()
+        public string SpawnMonsterOrEliteOrBoss()
         {
-            string Morphedname = "Mon-";
+            String MorphedName = "";
             var Ran = new Random();
-            int RandomNumber = Ran.Next(100, 999);
-            Morphedname += RandomNumber;
-            return Morphedname;
+            int RandomNumber = Ran.Next(1, 100);
+            int RandomName = Ran.Next(1, 6);
 
+
+            if (RandomNumber < 80 || Players[0].Level < 4)
+            {
+                MorphedName = RandomeNames(RandomName, MorphedName);
+                CreateMonster(MorphedName);
+
+            }
+            else if(RandomNumber >= 80 && Players[0].Level >= 4)
+            {
+                MorphedName += "Elite ";
+                MorphedName = RandomeNames(RandomName, MorphedName);
+                CreateMonster(MorphedName);
+            }
+            else if (Players[0].Level == 10)
+            {
+                MorphedName += "Boss ";
+                MorphedName = RandomeNames(RandomName, MorphedName);
+
+            }
+
+            return MorphedName;
+
+        }
+
+        private static string RandomeNames(int RandomName, string MorphedName)
+        {
+            switch (RandomName)
+            {
+                case 1:
+                    MorphedName += "Snake";
+                    break;
+                case 2:
+                    MorphedName += "Skeleton";
+                    break;
+                case 3:
+                    MorphedName += "Knight";
+                    break;
+                case 4:
+                    MorphedName += "Soldier";
+                    break;
+                case 5:
+                    MorphedName += "Bear";
+                    break;
+                case 6:
+                    MorphedName += "Tiger";
+                    break;
+                default:
+                    break;
+            }
+
+            return MorphedName;
         }
 
         public void Fight()
         {
             Console.Clear();
-            CreateMonster();
+            var ran = new Random();
+            SpawnMonsterOrEliteOrBoss();
             GameLevels();
             Console.WriteLine(Monsters[0].Name + " Has appeared " + "with healthamount: " + Monsters[0].Health);
             while (Monsters[0].Health > 0 && Players[0].Health > 0)
             {
                 if (Monsters[0].Health > 0)
                 {
-                    Players[0].Health -= MonsterAttack();
-                    Console.WriteLine(Players[0].Name + " Took " + MonsterAttack() + " damage and Has " + Players[0].Health + " Left");
+                    MonsterAttack();
+                    
                     if (Monsters[0].Health > 0)
                     {
-                        Monsters[0].Health -= PlayerAttack();
-                        Console.WriteLine(Monsters[0].Name + " Took " + PlayerAttack() +  " damage and Has " + Monsters[0].Health + " Left");
+                        PlayerAttack();
 
                     }
                     PressSomething();
@@ -461,16 +532,18 @@ namespace TheGame421
             int damage = 0;
             var Ran = new Random();
 
-
-            Monsters[0].Damage = (Players[0].MaxHealth / 6) + (Players[0].Level * 5);
-            if (Monsters[0].AmuletOfStrength.Equals(true))
+            if (Monsters[0].Monster.Equals(true))
             {
-                
+                Monsters[0].Damage = (Players[0].MaxHealth / 6) + (Players[0].Level * 5);
 
             }
-            if (Monsters[0].AmuletOfToughness.Equals(true))
+            if (Monsters[0].EliteMonster.Equals(true))
             {
-
+                Monsters[0].Damage = (Players[0].MaxHealth / 5) + (Players[0].Level * 6);
+            }
+            if(Monsters[0].LastBoss.Equals(true))
+            {
+                Monsters[0].Damage = (Players[0].MaxHealth / 3);
             }
 
             damage = Ran.Next(Monsters[0].Damage/ 3, Monsters[0].Damage);
@@ -498,7 +571,23 @@ namespace TheGame421
             var Ran = new Random();
             HealingAmount = Ran.Next(Convert.ToInt32(Players[0].MaxHealth * 0.3), Convert.ToInt32(Players[0].MaxHealth * 0.6));
             Players[0].Health += HealingAmount;
+            if (Players[0].Health >= Players[0].MaxHealth)
+            {
+                Players[0].Health = Players[0].MaxHealth;
+            }
             
+        }
+
+        public void CreateEliteMonster(string MonsterName)
+        {
+            SpecificMonster NewMonster = new SpecificMonster();
+            var Ran = new Random();
+            NewMonster.Name = MonsterName;
+            NewMonster.Health = Players[0].MaxHealth / 2;
+            NewMonster.Gold = Ran.Next(Players[0].Level + 5, Players[0].Level + 10);
+            NewMonster.Exp = Ran.Next(Players[0].Level + 6, Players[0].Level + 10);
+            NewMonster.EliteMonster = true;
+            Monsters.Add(NewMonster);
         }
     }
 }

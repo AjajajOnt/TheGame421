@@ -34,9 +34,7 @@ namespace TheGame421
 
         public bool Monster { get; set; }
 
-        public bool Boss { get; set; }
-
-        public int LastBoss { get; set; }
+        public bool LastBoss { get; set; }
 
         public int PotionAmount { get; set; }
 
@@ -58,5 +56,13 @@ namespace TheGame421
 
         public int AmuletOfToughnessAmount { get; set; }
         public int MaxExpThisLevel { get; set; }
+
+        public bool EliteMonster
+        {
+            get => default;
+            set
+            {
+            }
+        }
     }
     }
