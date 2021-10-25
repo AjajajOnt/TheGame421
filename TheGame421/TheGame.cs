@@ -527,28 +527,32 @@ namespace TheGame421
             Console.ReadKey();
         }
 
-        public int MonsterAttack()
+        public void MonsterAttack()
         {
             int damage = 0;
             var Ran = new Random();
 
             if (Monsters[0].Monster.Equals(true))
             {
-                Monsters[0].Damage = (Players[0].MaxHealth / 6) + (Players[0].Level * 5);
+                Monsters[0].Damage = (((Players[0].MaxHealth / 6) + (Players[0].Level * 5)) * (Players[0].Toughness / 10)) - (Players[0].MaxHealth / 6) + (Players[0].Level * 5);
+                Console.WriteLine(Players[0].Name + " Took " + damage + " damage and Has " + Players[0].Health + "Health Left");
+                damage = Ran.Next(Monsters[0].Damage / 3, Monsters[0].Damage);
 
             }
             if (Monsters[0].EliteMonster.Equals(true))
             {
-                Monsters[0].Damage = (Players[0].MaxHealth / 5) + (Players[0].Level * 6);
+                Monsters[0].Damage = (((Players[0].MaxHealth / 5) + (Players[0].Level * 6)) * (Players[0].Toughness / 10)) - (Players[0].MaxHealth / 5) + (Players[0].Level * 6);
+                Console.WriteLine(Players[0].Name + " Took " + damage + " damage and Has " + Players[0].Health + "Health Left");
+                damage = Ran.Next(Monsters[0].Damage / 3, Monsters[0].Damage);
             }
             if(Monsters[0].LastBoss.Equals(true))
             {
-                Monsters[0].Damage = (Players[0].MaxHealth / 3);
+                Monsters[0].Damage = ((Players[0].MaxHealth / 3) * (Players[0].Toughness / 10)) - Players[0].MaxHealth / 3;
+                Console.WriteLine(Players[0].Name + " Took " + damage + " damage and Has " + Players[0].Health + "Health Left");
+                damage = Ran.Next(Monsters[0].Damage / 3, Monsters[0].Damage);
             }
 
-            damage = Ran.Next(Monsters[0].Damage/ 3, Monsters[0].Damage);
-
-            return damage;
+ 
         }
 
         public int SpendGold(int GoldAmount)
