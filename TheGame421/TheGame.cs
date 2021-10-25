@@ -60,7 +60,8 @@ namespace TheGame421
             Chance = Ran.Next(1, 100);
             if (Chance >= 90 )
             {
-                Console.WriteLine("Grass");
+                Console.WriteLine("You see nothing but Grass");
+                PressSomething();
             }
             else
             {
@@ -205,7 +206,7 @@ namespace TheGame421
             var Ran = new Random();
             NewMonster.Name = MonsterName;
             NewMonster.Health = Players[0].MaxHealth / 3;
-            NewMonster.Gold = Ran.Next(Players[0].Level, Players[0].Level + 3);
+            NewMonster.Gold = Ran.Next(Players[0].Level + 25, Players[0].Level + 50);
             NewMonster.Exp = Ran.Next(Players[0].Level + 3, Players[0].Level + 7);
             NewMonster.Monster = true;
             Monsters.Add(NewMonster);
@@ -341,6 +342,8 @@ namespace TheGame421
                 Players[0].Level++;
                 Players[0].MaxHealth += 25;
                 Players[0].Health = Players[0].MaxHealth;
+                Console.WriteLine("You leveled up and are now level " + Players[0].Level);
+                PressSomething();
             }
         }
 
@@ -496,28 +499,21 @@ namespace TheGame421
             if (Monsters[0].Monster.Equals(true))
             {
                 Monsters[0].Damage = ((Players[0].MaxHealth / 6) + (Players[0].Level * 5) - ((Players[0].MaxHealth / 6) + (Players[0].Level * 5)) * (Players[0].Toughness / 10)) ;
-                damage = Ran.Next(Monsters[0].Damage / 3, Monsters[0].Damage);
-                Players[0].Health -= damage;
-                Console.WriteLine(Players[0].Name + " Took " + damage + " damage and Has " + Players[0].Health + "Health Left");
-                
-
             }
             if (Monsters[0].EliteMonster.Equals(true))
             {
                 Monsters[0].Damage = ( (Players[0].MaxHealth / 5) + (Players[0].Level * 6) - ((Players[0].MaxHealth / 5) + (Players[0].Level * 6)) * (Players[0].Toughness / 10));
-                damage = Ran.Next(Monsters[0].Damage / 3, Monsters[0].Damage);
-                Players[0].Health -= damage;
-                Console.WriteLine(Players[0].Name + " Took " + damage + " damage and Has " + Players[0].Health + "Health Left");
+
 
             }
             if (Monsters[0].LastBoss.Equals(true))
             {
                 Monsters[0].Damage = ( (Players[0].MaxHealth / 3) - (Players[0].MaxHealth / 3) * (Players[0].Toughness / 10)) ;
-                damage = Ran.Next(Monsters[0].Damage / 3, Monsters[0].Damage);
-                Players[0].Health -= damage;
-                Console.WriteLine(Players[0].Name + " Took " + damage + " damage and Has " + Players[0].Health + "Health Left");
-
+                
             }
+            damage = Ran.Next(Monsters[0].Damage / 3, Monsters[0].Damage);
+            Players[0].Health -= damage;
+            Console.WriteLine(Players[0].Name + " Took " + damage + " damage and Has " + Players[0].Health + "Health Left");
 
 
         }
@@ -555,7 +551,7 @@ namespace TheGame421
             var Ran = new Random();
             NewMonster.Name = MonsterName;
             NewMonster.Health = Players[0].MaxHealth / 2;
-            NewMonster.Gold = Ran.Next(Players[0].Level + 5, Players[0].Level + 10);
+            NewMonster.Gold = Ran.Next(Players[0].Level + 100, Players[0].Level + 200);
             NewMonster.Exp = Ran.Next(Players[0].Level + 6, Players[0].Level + 10);
             NewMonster.EliteMonster = true;
             Monsters.Add(NewMonster);
