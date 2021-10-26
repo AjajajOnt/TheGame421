@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Reflection;
 
 namespace TheGame421
 {
     public class TheGame
     {
-        
-        int HCode = 0;
-        int Choice= 0;
-        int Chance = 0;
-        string Input = "";
-        List<Player> Players = new List<Player>();
-        List<SpecificMonster> Monsters = new List<SpecificMonster>();
-        List<Shop> Shops = new List<Shop>();
+        private int Choice = 0;
+        private int Chance = 0;
+        private List<Player> Players = new List<Player>();
+        private List<SpecificMonster> Monsters = new List<SpecificMonster>();
+        private List<Shop> Shops = new List<Shop>();
 
         internal void CreateShop()
         {
@@ -29,8 +23,8 @@ namespace TheGame421
             TheShop.PotionAmount = 5;
             TheShop.HealingSword = true;
             Shops.Add(TheShop);
-
         }
+
         public void CreatePlayer()
         {
             Player ThePlayer = new Player();
@@ -42,22 +36,15 @@ namespace TheGame421
             ThePlayer.Exp = 1;
             ThePlayer.MaxExpThisLevel = 12;
             ThePlayer.Gold = 10;
-            HCode = ThePlayer.GetHashCode();
             Players.Add(ThePlayer);
             Console.Clear();
-        }
-
-
-        public void GameOver()
-        {
-            throw new System.NotImplementedException();
         }
 
         public void GoAdventureChoice()
         {
             var Ran = new Random();
             Chance = Ran.Next(1, 100);
-            if (Chance >= 90 )
+            if (Chance >= 90)
             {
                 Console.WriteLine("You see nothing but Grass");
                 PressSomething();
@@ -66,14 +53,12 @@ namespace TheGame421
             {
                 Fight();
             }
-            
         }
 
         public void PlayerAttack()
         {
             int damage = 0;
             var Ran = new Random();
-            
 
             if (Players[0].HealingSword.Equals(true))
             {
@@ -86,8 +71,8 @@ namespace TheGame421
                 {
                     Players[0].Health = Players[0].MaxHealth;
                 }
-                RedDamageText(Players[0].Name, " Attacks ", Monsters[0].Name, " for ", damage.ToString(), " damage. Health Left: ", Monsters[0].Health.ToString(), "/", Monsters[0].MaxHealth.ToString());
-                GreenHealText("Your sword heals you for ", (damage / 2).ToString() , " Health");
+                RedDamageText2(Players[0].Name, " Attacks ", Monsters[0].Name, " for ", damage.ToString(), " damage. Health Left: ", Monsters[0].Health.ToString(), "/", Monsters[0].MaxHealth.ToString());
+                GreenHealText("Your sword heals you for ", (damage / 2).ToString(), " Health");
             }
             else
             {
@@ -100,13 +85,7 @@ namespace TheGame421
                     Monsters[0].Health = 0;
                 }
                 RedDamageText2(Players[0].Name, " Attacks ", Monsters[0].Name, " for ", damage.ToString(), " damage. Health Left: ", Monsters[0].Health.ToString(), "/", Monsters[0].MaxHealth.ToString());
-
             }
-                
-
-            
-
-            
         }
 
         public void ShopChoice()
@@ -126,21 +105,21 @@ namespace TheGame421
                 Choice = 0;
                 Console.Clear();
             }
-            
+
             switch (Choice)
             {
                 case 1:
                     BuyStuff();
                     break;
+
                 case 2:
                     SellStuff();
                     break;
+
                 default:
                     Choice = 3;
                     break;
-
             }
-
         }
 
         public void HealChoice()
@@ -161,19 +140,16 @@ namespace TheGame421
             {
                 SpendGold(Players[0].Level * 4);
                 HealUp();
-
             }
             else
             {
                 Console.WriteLine("You don't have enough gold. Go kill some monsters.");
             }
-
-
         }
 
         public void GameLevels()
         {
-            if(Players[0].Level >= 9)
+            if (Players[0].Level >= 9)
             {
                 TextGrapics("Game Level: Dead Kings Dungeon");
             }
@@ -185,40 +161,33 @@ namespace TheGame421
             {
                 TextGrapics("Game Level: Empty Gold Mine");
             }
-            else 
+            else
             {
                 TextGrapics("Game Level: Abandoned Town");
-                
             }
         }
 
         public void ShowPlayerInfo()
         {
-
             for (int i = 0; i < Players.Count; i++)
             {
-                Console.WriteLine("      Name: " + Players[i].Name + "     Health: " + Players[i].Health + "/" + Players[i].MaxHealth + "     Gold: " + Players[i].Gold + "     Exp: " + Players[i].Exp + "/" + Players[i].MaxExpThisLevel  + "     Level: " + Players[i].Level);
-
+                Console.WriteLine("      Name: " + Players[i].Name + "     Health: " + Players[i].Health + "/" + Players[i].MaxHealth + "     Gold: " + Players[i].Gold + "     Exp: " + Players[i].Exp + "/" + Players[i].MaxExpThisLevel + "     Level: " + Players[i].Level);
             }
-
-
-
         }
+
         public void ShowPlayerInfo2()
         {
-                  
-
-            Console.WriteLine("* Name: "  + Players[0].Name);
+            Console.WriteLine("* Name: " + Players[0].Name);
             Console.WriteLine("* Level: " + Players[0].Level);
-            Console.WriteLine("* Hp: " + Players[0].Health+"/"+ Players[0].MaxHealth);
-            Console.WriteLine("* Exp: " + Players[0].Exp+ "/" + Players[0].MaxExpThisLevel);
+            Console.WriteLine("* Hp: " + Players[0].Health + "/" + Players[0].MaxHealth);
+            Console.WriteLine("* Exp: " + Players[0].Exp + "/" + Players[0].MaxExpThisLevel);
             Console.WriteLine("* Gold: " + Players[0].Gold);
             Console.WriteLine("* Strength: " + Players[0].Strength);
             Console.WriteLine("* Toughness: " + Players[0].Toughness);
 
             PressSomething();
-
         }
+
         public void CreateEliteMonster(string MonsterName)
         {
             SpecificMonster NewMonster = new SpecificMonster();
@@ -283,9 +252,7 @@ namespace TheGame421
             int RandomNumber = Ran.Next(1, 100);
             int RandomName = Ran.Next(1, 6);
 
-
-
-            if(RandomNumber >= 70 && Players[0].Level >= 4 && Players[0].Level < 9)
+            if (RandomNumber >= 70 && Players[0].Level >= 4 && Players[0].Level < 9)
             {
                 MorphedName += "Elite ";
                 MorphedName = RandomeNames(RandomName, MorphedName);
@@ -298,16 +265,13 @@ namespace TheGame421
                 MorphedName = RandomeNames(RandomName, MorphedName);
                 CreateLastBoss(MorphedName);
             }
-            else       
+            else
             {
-                    MorphedName = RandomeNames(RandomName, MorphedName);
-                    CreateMonster(MorphedName);
-
-                
+                MorphedName = RandomeNames(RandomName, MorphedName);
+                CreateMonster(MorphedName);
             }
 
             return MorphedName;
-
         }
 
         private static string RandomeNames(int RandomName, string MorphedName)
@@ -317,21 +281,27 @@ namespace TheGame421
                 case 1:
                     MorphedName += "Snake";
                     break;
+
                 case 2:
                     MorphedName += "Skeleton";
                     break;
+
                 case 3:
                     MorphedName += "Knight";
                     break;
+
                 case 4:
                     MorphedName += "Soldier";
                     break;
+
                 case 5:
                     MorphedName += "Bear";
                     break;
+
                 case 6:
                     MorphedName += "Tiger";
                     break;
+
                 default:
                     break;
             }
@@ -351,11 +321,10 @@ namespace TheGame421
                 if (Monsters[0].Health > 0)
                 {
                     MonsterAttack();
-                    
+
                     if (Monsters[0].Health > 0)
                     {
                         PlayerAttack();
-
                     }
                     PressSomething();
                 }
@@ -376,17 +345,17 @@ namespace TheGame421
                 Console.WriteLine("You died and lost the game.");
                 CreatePlayer();
             }
-            if(Players[0].Level == 10)
+            if (Players[0].Level == 10)
             {
                 Console.ForegroundColor = ConsoleColor.DarkBlue;
                 Console.BackgroundColor = ConsoleColor.White;
                 Console.WriteLine("CONGRATULATION YOU WON THE GAME");
                 Players.Remove(Players[0]);
+                Shops.Remove(Shops[0]);
+                CreateShop();
                 CreatePlayer();
-
             }
 
-            
             LevelUp();
             if (Players[0].Level == 10)
             {
@@ -395,10 +364,10 @@ namespace TheGame421
                 Console.BackgroundColor = ConsoleColor.White;
                 Console.WriteLine("CONGRATULATION YOU WON THE GAME");
                 Players.Remove(Players[0]);
-                
+                Shops.Remove(Shops[0]);
+                CreateShop();
                 CreatePlayer();
                 Console.ResetColor();
-
             }
             PressSomething();
             Monsters.Remove(Monsters[0]);
@@ -406,7 +375,6 @@ namespace TheGame421
 
         public void LevelUp()
         {
-            
             if (Players[0].Exp >= Players[0].MaxExpThisLevel)
             {
                 Players[0].Exp %= Players[0].MaxExpThisLevel;
@@ -416,7 +384,6 @@ namespace TheGame421
                 Players[0].Health = Players[0].MaxHealth;
                 WhiteBGWithBlackText("You leveled up and are now level " + Players[0].Level);
             }
-            
         }
 
         private void WhiteBGWithBlackText(string Text)
@@ -425,21 +392,20 @@ namespace TheGame421
             Console.ForegroundColor = ConsoleColor.Black;
             Console.WriteLine(Text);
             Console.ResetColor();
-            PressSomething();
         }
+
         private void GreenBGWithBlueText(string Text)
         {
             Console.BackgroundColor = ConsoleColor.Green;
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine(Text);
             Console.ResetColor();
-            
         }
 
         public void TextGrapics(string text)
         {
             Console.WriteLine("***********************************************************");
-            Console.WriteLine("*                     "   + text                            );
+            Console.WriteLine("*                     " + text);
             Console.WriteLine("***********************************************************");
         }
 
@@ -454,12 +420,12 @@ namespace TheGame421
             {
                 Console.WriteLine("    2. Amulet Of Toughness. " + Shops[0].AmuletOfToughnessAmount + " Left.  Price: 100");
             }
-                    
+
             if (Shops[0].HealingSword.Equals(true))
             {
                 Console.WriteLine("    3. Healing Sword.                Price: 100");
             }
-                Console.WriteLine("    4. Exit");
+            Console.WriteLine("    4. Exit");
             Console.WriteLine("             Shop Gold: " + Shops[0].Gold);
             Console.Write("Enter item number you wanna buy: ");
             try
@@ -479,19 +445,17 @@ namespace TheGame421
                 {
                     Shops[0].AmuletOfStrength = false;
                 }
-                
+
                 Players[0].AmuletOfStrength = true;
                 Players[0].AmuletOfStrengthAmount += 1;
                 Players[0].Strength += 5;
                 Players[0].Gold -= 100;
                 Shops[0].Gold += 100;
-
             }
-            else if(Choice == 1 && Players[0].Gold < 100)
+            else if (Choice == 1 && Players[0].Gold < 100)
             {
                 Console.WriteLine("You don't have enough gold. Go kill some monsters");
                 PressSomething();
-
             }
             if (Choice == 2 && Shops[0].AmuletOfToughness.Equals(true) && Players[0].Gold >= 100)
             {
@@ -507,13 +471,11 @@ namespace TheGame421
                 Players[0].Toughness += 2;
                 Players[0].Gold -= 100;
                 Shops[0].Gold += 100;
-
             }
             else if (Choice == 2 && Players[0].Gold < 100)
             {
                 Console.WriteLine("You don't have enough gold. Go kill some monsters");
                 PressSomething();
-
             }
 
             if (Choice == 3 && Shops[0].HealingSword.Equals(true) && Players[0].Gold >= 100)
@@ -522,15 +484,12 @@ namespace TheGame421
                 Players[0].HealingSword = true;
                 Players[0].Gold -= 100;
                 Shops[0].Gold += 100;
-
-
             }
             else if (Choice == 3 && Players[0].Gold < 100)
             {
                 Console.WriteLine("You don't have enough gold. Go kill some monsters");
                 PressSomething();
             }
-
         }
 
         public void SellStuff()
@@ -548,7 +507,7 @@ namespace TheGame421
             {
                 Console.WriteLine("    3. Healing Sword.                Price: 100");
             }
-                Console.WriteLine("    4. Exit");
+            Console.WriteLine("    4. Exit");
             Console.WriteLine("             Shop Gold: " + Shops[0].Gold);
             Console.Write("Enter item number you wanna Sell: ");
 
@@ -570,19 +529,16 @@ namespace TheGame421
                     Players[0].AmuletOfStrength = false;
                 }
 
-
                 Players[0].Strength -= 5;
                 Shops[0].AmuletOfStrength = true;
                 Shops[0].AmuletOfStrengthAmount += 1;
                 Shops[0].Gold -= 100;
                 Players[0].Gold += 100;
-
             }
             else if (Choice == 1 && Players[0].AmuletOfStrength.Equals(false))
             {
                 Console.WriteLine("You don't have that item");
                 PressSomething();
-
             }
             if (Choice == 2 && Players[0].AmuletOfToughness.Equals(true) && Shops[0].Gold >= 100 && Players[0].AmuletOfToughnessAmount >= 1)
             {
@@ -598,15 +554,12 @@ namespace TheGame421
                 Shops[0].AmuletOfToughnessAmount += 1;
                 Shops[0].Gold -= 100;
                 Players[0].Gold += 100;
-
             }
             else if (Choice == 2 && Players[0].Toughness.Equals(false))
             {
                 Console.WriteLine("You don't have that item");
                 PressSomething();
-
             }
-
 
             if (Choice == 3 && Players[0].HealingSword.Equals(true) && Shops[0].Gold >= 100)
             {
@@ -614,16 +567,12 @@ namespace TheGame421
                 Shops[0].HealingSword = true;
                 Shops[0].Gold -= 100;
                 Players[0].Gold += 100;
-
-
             }
             else if (Choice == 3 && Players[0].HealingSword.Equals(false))
             {
                 Console.WriteLine("You don't have that item");
                 PressSomething();
-
             }
-
         }
 
         public void PressSomething()
@@ -639,25 +588,20 @@ namespace TheGame421
 
             if (Monsters[0].Monster.Equals(true))
             {
-                Monsters[0].Damage = ((Players[0].MaxHealth / 6) + (Players[0].Level * 5) - ((Players[0].MaxHealth / 6) + (Players[0].Level * 5)) * (Players[0].Toughness / 10)) ;
+                Monsters[0].Damage = ((Players[0].MaxHealth / 6) + (Players[0].Level * 5) - ((Players[0].MaxHealth / 6) + (Players[0].Level * 5)) * (Players[0].Toughness / 10));
             }
             else if (Monsters[0].EliteMonster.Equals(true))
             {
-                Monsters[0].Damage = ( (Players[0].MaxHealth / 5) + (Players[0].Level * 6) - ((Players[0].MaxHealth / 5) + (Players[0].Level * 6)) * (Players[0].Toughness / 10));
-
-
+                Monsters[0].Damage = ((Players[0].MaxHealth / 5) + (Players[0].Level * 6) - ((Players[0].MaxHealth / 5) + (Players[0].Level * 6)) * (Players[0].Toughness / 10));
             }
             else if (Monsters[0].LastBoss.Equals(true))
             {
-                Monsters[0].Damage = ( (Players[0].MaxHealth / 3) - (Players[0].MaxHealth / 3) * (Players[0].Toughness / 10)) ;
-                
+                Monsters[0].Damage = ((Players[0].MaxHealth / 3) - (Players[0].MaxHealth / 3) * (Players[0].Toughness / 10));
             }
             damage = Ran.Next(Monsters[0].Damage / 3, Monsters[0].Damage);
             Players[0].Health -= damage;
-            
-            RedDamageText(Monsters[0].Name , " Attacks " ,  Players[0].Name , " for "  , damage.ToString() ,  " damage. Health Left: " ,  Players[0].Health.ToString(), "/", Players[0].MaxHealth.ToString());
 
-
+            RedDamageText(Monsters[0].Name, " Attacks ", Players[0].Name, " for ", damage.ToString(), " damage. Health Left: ", Players[0].Health.ToString(), "/", Players[0].MaxHealth.ToString());
         }
 
         public int SpendGold(int GoldAmount)
@@ -686,10 +630,7 @@ namespace TheGame421
             }
             GreenBGWithBlueText("You healed for: " + HealingAmount.ToString() + " health and now have " + Players[0].Health + " health");
             PressSomething();
-            
         }
-
-
 
         public void RedDamageText(string PlayerName1, string Text2, string MonsterName3, string Text4, string CText5, string Text6, string CText7, string Text8, string CText9)
         {
@@ -716,7 +657,6 @@ namespace TheGame421
                 Console.Write(CText9);
                 Console.ResetColor();
                 Console.WriteLine();
-
             }
             else if (Monsters[0].EliteMonster.Equals(true))
             {
@@ -741,7 +681,6 @@ namespace TheGame421
                 Console.Write(CText9);
                 Console.ResetColor();
                 Console.WriteLine();
-
             }
             else if (Monsters[0].LastBoss.Equals(true))
             {
@@ -767,17 +706,13 @@ namespace TheGame421
                 Console.Write(CText9);
                 Console.ResetColor();
                 Console.WriteLine();
-
             }
-            
-            
-
         }
+
         public void RedDamageText2(string PlayerName1, string Text2, string MonsterName3, string Text4, string CText5, string Text6, string CText7, string Text8, string CText9)
         {
             if (Monsters[0].Monster.Equals(true))
             {
-
                 Console.BackgroundColor = ConsoleColor.DarkBlue;
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write(PlayerName1);
@@ -799,7 +734,6 @@ namespace TheGame421
                 Console.Write(CText9);
                 Console.ResetColor();
                 Console.WriteLine();
-
             }
             else if (Monsters[0].EliteMonster.Equals(true))
             {
@@ -824,7 +758,6 @@ namespace TheGame421
                 Console.Write(CText9);
                 Console.ResetColor();
                 Console.WriteLine();
-
             }
             else if (Monsters[0].LastBoss.Equals(true))
             {
@@ -850,11 +783,7 @@ namespace TheGame421
                 Console.Write(CText9);
                 Console.ResetColor();
                 Console.WriteLine();
-
             }
-
-
-
         }
 
         public void GreenHealText(string Text, string CText, string Text2)
@@ -870,7 +799,7 @@ namespace TheGame421
         {
             TheGame Start = new TheGame();
             int MenuChoice = 0;
-            
+
             CreateShop();
             CreatePlayer();
             while (true)
@@ -889,33 +818,31 @@ namespace TheGame421
                 }
                 switch (MenuChoice)
                 {
-
                     case 1:
                         GoAdventureChoice();
-                        
 
                         break;
+
                     case 2:
                         ShowPlayerInfo2();
                         break;
+
                     case 3:
                         ShopChoice();
                         break;
+
                     case 4:
                         HealChoice();
                         break;
+
                     case 5:
                         GameLevels();
                         break;
+
                     default:
                         MenuChoice = 0;
                         break;
-
-
-
-
                 }
-
             }
         }
     }

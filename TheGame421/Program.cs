@@ -1,15 +1,11 @@
-﻿using System;
-
-namespace TheGame421
+﻿namespace TheGame421
 {
-    class Program
+    internal class Program
     {
-
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             TheGame Start = new TheGame();
             Start.StartGame();
-
         }
     }
 }
