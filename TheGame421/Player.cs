@@ -12,8 +12,6 @@
 
         public int Gold { get; set; }
 
-        public bool PlayerBool { get; set; }
-
         public bool AmuletOfStrength { get; set; }
 
         public bool AmuletOfToughness { get; set; }
@@ -29,10 +27,6 @@
         public bool Monster { get; set; }
 
         public bool LastBoss { get; set; }
-
-        public int PotionAmount { get; set; }
-
-        public bool IsDead { get; set; }
 
         public bool GameLevel1 { get; set; }
 

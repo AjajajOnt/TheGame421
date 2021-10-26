@@ -11,8 +11,8 @@ namespace TheGame421
         private List<SpecificMonster> Monsters = new List<SpecificMonster>();
         private List<Shop> Shops = new List<Shop>();
 
-        internal void CreateShop()
-        {
+        internal void CreateShop() //Skapar en shop
+        { 
             Shop TheShop = new Shop();
             TheShop.AmuletOfStrength = true;
             TheShop.AmuletOfStrengthAmount = 5;
@@ -25,7 +25,7 @@ namespace TheGame421
             Shops.Add(TheShop);
         }
 
-        public void CreatePlayer()
+        public void CreatePlayer() //Skapar en spelare
         {
             Player ThePlayer = new Player();
             Console.Write("Enter Player Name: ");
@@ -40,7 +40,7 @@ namespace TheGame421
             Console.Clear();
         }
 
-        public void GoAdventureChoice()
+        public void GoAdventureChoice() // Går ut på äventyr
         {
             var Ran = new Random();
             Chance = Ran.Next(1, 100);
@@ -55,12 +55,12 @@ namespace TheGame421
             }
         }
 
-        public void PlayerAttack()
+        public void PlayerAttack() // Spelaren attackerar
         {
             int damage = 0;
             var Ran = new Random();
 
-            if (Players[0].HealingSword.Equals(true))
+            if (Players[0].HealingSword.Equals(true)) // Använder ett svärd som healar dig om du har köpt det
             {
                 Players[0].Damage = Players[0].MaxHealth / 5;
                 Players[0].Damage = (Players[0].Strength / 10 * Players[0].Damage) + Players[0].Damage;
@@ -88,7 +88,7 @@ namespace TheGame421
             }
         }
 
-        public void ShopChoice()
+        public void ShopChoice() // Shopping meny
         {
             Console.Clear();
             TextGrapics("Welcome to the shop");
@@ -122,7 +122,7 @@ namespace TheGame421
             }
         }
 
-        public void HealChoice()
+        public void HealChoice() //Healing meny där du kan heala dig
         {
             TextGrapics("Old Priests Church");
             Console.WriteLine("1. Pay " + Players[0].Level * 4 + " Gold to heal 30-60%");
@@ -147,7 +147,7 @@ namespace TheGame421
             }
         }
 
-        public void GameLevels()
+        public void GameLevels() // Lite game levels som inte gör något specielt
         {
             if (Players[0].Level >= 9)
             {
@@ -167,7 +167,7 @@ namespace TheGame421
             }
         }
 
-        public void ShowPlayerInfo()
+        public void ShowPlayerInfo() // skriver ut lite info om spelaren på huvudmenyn
         {
             for (int i = 0; i < Players.Count; i++)
             {
@@ -175,7 +175,7 @@ namespace TheGame421
             }
         }
 
-        public void ShowPlayerInfo2()
+        public void ShowPlayerInfo2() // Skriver ut player info på val 2
         {
             Console.WriteLine("* Name: " + Players[0].Name);
             Console.WriteLine("* Level: " + Players[0].Level);
@@ -188,7 +188,7 @@ namespace TheGame421
             PressSomething();
         }
 
-        public void CreateEliteMonster(string MonsterName)
+        public void CreateEliteMonster(string MonsterName) // Skapar ett elite monster
         {
             SpecificMonster NewMonster = new SpecificMonster();
             var Ran = new Random();
@@ -201,7 +201,7 @@ namespace TheGame421
             Monsters.Add(NewMonster);
         }
 
-        public void CreateMonster(string MonsterName)
+        public void CreateMonster(string MonsterName) // Skapar ett vanligt monster
         {
             SpecificMonster NewMonster = new SpecificMonster();
             var Ran = new Random();
@@ -214,7 +214,7 @@ namespace TheGame421
             Monsters.Add(NewMonster);
         }
 
-        public void CreateLastBoss(string MonsterName)
+        public void CreateLastBoss(string MonsterName) // Skapar en boss som man möter level 9
         {
             SpecificMonster NewMonster = new SpecificMonster();
             var Ran = new Random();
@@ -227,7 +227,7 @@ namespace TheGame421
             Monsters.Add(NewMonster);
         }
 
-        public void GraphicMeny()
+        public void GraphicMeny() // Huvudmeny
         {
             Console.WriteLine("***********************************************************************");
             Console.WriteLine("*|                                                                   |*");
@@ -245,7 +245,7 @@ namespace TheGame421
             ShowPlayerInfo();
         }
 
-        public string SpawnMonsterOrEliteOrBoss()
+        public string SpawnMonsterOrEliteOrBoss() // Bestämer vilket monster som ska skapas.
         {
             String MorphedName = "";
             var Ran = new Random();
@@ -274,7 +274,7 @@ namespace TheGame421
             return MorphedName;
         }
 
-        private static string RandomeNames(int RandomName, string MorphedName)
+        private static string RandomeNames(int RandomName, string MorphedName) //Ger monster random namn
         {
             switch (RandomName)
             {
@@ -309,7 +309,7 @@ namespace TheGame421
             return MorphedName;
         }
 
-        public void Fight()
+        public void Fight() // Fight helt enkelt. Dör man så resetas spelet. Blir man level 10 så vinner man.
         {
             Console.Clear();
             var ran = new Random();
@@ -373,7 +373,7 @@ namespace TheGame421
             Monsters.Remove(Monsters[0]);
         }
 
-        public void LevelUp()
+        public void LevelUp() // Höjer spelarens level om man har tillräckligt med exp.
         {
             if (Players[0].Exp >= Players[0].MaxExpThisLevel)
             {
@@ -386,7 +386,7 @@ namespace TheGame421
             }
         }
 
-        private void WhiteBGWithBlackText(string Text)
+        private void WhiteBGWithBlackText(string Text) 
         {
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
@@ -409,7 +409,7 @@ namespace TheGame421
             Console.WriteLine("***********************************************************");
         }
 
-        public void BuyStuff()
+        public void BuyStuff() //Köp meny
         {
             TextGrapics("What do you want to buy?");
             if (Shops[0].AmuletOfStrength.Equals(true) && Shops[0].AmuletOfStrengthAmount >= 1)
@@ -492,7 +492,7 @@ namespace TheGame421
             }
         }
 
-        public void SellStuff()
+        public void SellStuff() // Sälj meny
         {
             TextGrapics("What do you want to Sell?");
             if (Players[0].AmuletOfStrength.Equals(true) && Players[0].AmuletOfStrengthAmount >= 1)
@@ -581,7 +581,7 @@ namespace TheGame421
             Console.ReadKey();
         }
 
-        public void MonsterAttack()
+        public void MonsterAttack() // Attack som alla monster använder
         {
             int damage = 0;
             var Ran = new Random();
@@ -618,7 +618,7 @@ namespace TheGame421
             return GoldAmount;
         }
 
-        public void HealUp()
+        public void HealUp() // Heala dig genom meny val 4
         {
             int HealingAmount = 0;
             var Ran = new Random();
@@ -795,7 +795,7 @@ namespace TheGame421
             Console.WriteLine(Text2);
         }
 
-        public void StartGame()
+        public void StartGame() // Startar spelet.
         {
             TheGame Start = new TheGame();
             int MenuChoice = 0;
