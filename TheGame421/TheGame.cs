@@ -37,10 +37,10 @@ namespace TheGame421
             // Console.Write("Enter Player Name: ");
             // ThePlayer.Name = Console.ReadLine();
             ThePlayer.Name = "MilkyJuicer";
-            ThePlayer.Health = 100;
-            ThePlayer.MaxHealth = 150;
+            ThePlayer.Health = 1000;
+            ThePlayer.MaxHealth = 1500;
             ThePlayer.Level = 1;
-            ThePlayer.Exp = 1;
+            ThePlayer.Exp = 11;
             ThePlayer.MaxExpThisLevel = 12;
             ThePlayer.Gold = 500;
             HCode = ThePlayer.GetHashCode();
@@ -87,7 +87,7 @@ namespace TheGame421
                 {
                     Players[0].Health = Players[0].MaxHealth;
                 }
-                Console.WriteLine(Monsters[0].Name + " Took " + damage + " damage and Has " + Monsters[0].Health + " Health Left");
+                RedDamageText(Players[0].Name, " Attacks ", Monsters[0].Name, " for ", damage.ToString(), " damage. Health Left: ", Monsters[0].Health.ToString(), "/", Monsters[0].MaxHealth.ToString());
                 Console.WriteLine("Your sword heals you for " + damage / 2 + " Health");
             }
             else
@@ -96,7 +96,11 @@ namespace TheGame421
                 Players[0].Damage = (Players[0].Strength / 10 * Players[0].Damage) + Players[0].Damage;
                 damage = Ran.Next(Players[0].Damage / 2, Players[0].Damage);
                 Monsters[0].Health -= damage;
-                Console.WriteLine(Monsters[0].Name + " Took " + damage + " damage and Has " + Monsters[0].Health + "Health Left");
+                if (Monsters[0].Health < 0)
+                {
+                    Monsters[0].Health = 0;
+                }
+                RedDamageText(Players[0].Name, " Attacks ", Monsters[0].Name, " for ", damage.ToString(), " damage. Health Left: ", Monsters[0].Health.ToString(), "/", Monsters[0].MaxHealth.ToString());
 
             }
                 
@@ -186,8 +190,10 @@ namespace TheGame421
         }
         public void ShowPlayerInfo2()
         {
+            Console.ForegroundColor = ConsoleColor.Red;
+            
 
-            Console.WriteLine("* Name: " + Players[0].Name);
+            Console.WriteLine("* Name: "  + Players[0].Name);
             Console.WriteLine("* Level: " + Players[0].Level);
             Console.WriteLine("* Hp: " + Players[0].Health+"/"+ Players[0].MaxHealth);
             Console.WriteLine("* Exp: " + Players[0].Exp+ "/" + 20);
@@ -206,6 +212,7 @@ namespace TheGame421
             var Ran = new Random();
             NewMonster.Name = MonsterName;
             NewMonster.Health = Players[0].MaxHealth / 3;
+            NewMonster.MaxHealth = NewMonster.Health;
             NewMonster.Gold = Ran.Next(Players[0].Level + 25, Players[0].Level + 50);
             NewMonster.Exp = Ran.Next(Players[0].Level + 3, Players[0].Level + 7);
             NewMonster.Monster = true;
@@ -218,6 +225,7 @@ namespace TheGame421
             var Ran = new Random();
             NewMonster.Name = MonsterName;
             NewMonster.Health = Players[0].MaxHealth * 2;
+            NewMonster.MaxHealth = NewMonster.Health;
             NewMonster.LastBoss = true;
             NewMonster.Gold = Ran.Next(1000);
             NewMonster.Exp = Ran.Next(1000);
@@ -328,6 +336,8 @@ namespace TheGame421
                 Players[0].Gold += Monsters[0].Gold;
                 Players[0].Exp += Monsters[0].Exp;
             }
+            Console.WriteLine(Monsters[0].Name + " Has died. You won the battle");
+            PressSomething();
             LevelUp();
             Monsters.Remove(Monsters[0]);
         }
@@ -342,9 +352,17 @@ namespace TheGame421
                 Players[0].Level++;
                 Players[0].MaxHealth += 25;
                 Players[0].Health = Players[0].MaxHealth;
-                Console.WriteLine("You leveled up and are now level " + Players[0].Level);
-                PressSomething();
+                WhiteBGWithBlackText("You leveled up and are now level " + Players[0].Level);
             }
+        }
+
+        private void WhiteBGWithBlackText(string Text)
+        {
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine(Text);
+            Console.ResetColor();
+            PressSomething();
         }
 
         public void TextGrapics(string text)
@@ -513,7 +531,8 @@ namespace TheGame421
             }
             damage = Ran.Next(Monsters[0].Damage / 3, Monsters[0].Damage);
             Players[0].Health -= damage;
-            Console.WriteLine(Players[0].Name + " Took " + damage + " damage and Has " + Players[0].Health + "Health Left");
+            
+            RedDamageText(Monsters[0].Name , " Attacks " ,  Players[0].Name , " for "  , damage.ToString() ,  " damage. Health Left: " ,  Players[0].Health.ToString(), "/", Players[0].MaxHealth.ToString());
 
 
         }
@@ -551,10 +570,40 @@ namespace TheGame421
             var Ran = new Random();
             NewMonster.Name = MonsterName;
             NewMonster.Health = Players[0].MaxHealth / 2;
+            NewMonster.MaxHealth = NewMonster.Health;
             NewMonster.Gold = Ran.Next(Players[0].Level + 100, Players[0].Level + 200);
             NewMonster.Exp = Ran.Next(Players[0].Level + 6, Players[0].Level + 10);
             NewMonster.EliteMonster = true;
             Monsters.Add(NewMonster);
+        }
+
+        public static void RedDamageText(string Text, string Text2, string Text3, string Text4, string CText5, string Text6, string CText7, string Text8, string CText9)
+        {
+            Console.Write(Text);
+            Console.Write(Text2);
+            Console.Write(Text3);
+            Console.Write(Text4);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(CText5);
+            Console.ResetColor();
+            Console.Write(Text6);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(CText7);
+            Console.ResetColor();
+            Console.Write(Text8);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(CText9);
+            Console.ResetColor();
+            Console.WriteLine();
+        }
+
+        public void GreenHealText(string ColorText)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+
+            Console.ResetColor();
+            Console.WriteLine(ColorText);
+            Console.ResetColor();
         }
     }
 }
