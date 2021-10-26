@@ -111,12 +111,22 @@ namespace TheGame421
 
         public void ShopChoice()
         {
+            Console.Clear();
             TextGrapics("Welcome to the shop");
             Console.WriteLine("         1. Buy items");
             Console.WriteLine("         2. Sell items");
             Console.WriteLine("         3. Exit");
             Console.Write("Enter your choice: ");
-            Choice = int.Parse(Console.ReadLine());
+            try
+            {
+                Choice = int.Parse(Console.ReadLine());
+            }
+            catch (Exception)
+            {
+                Choice = 0;
+                Console.Clear();
+            }
+            
             switch (Choice)
             {
                 case 1:
@@ -125,21 +135,28 @@ namespace TheGame421
                 case 2:
                     SellStuff();
                     break;
+                default:
+                    Choice = 3;
+                    break;
+
             }
 
-        }
-
-        public void ExitChoice()
-        {
-            throw new System.NotImplementedException();
         }
 
         public void HealChoice()
         {
             TextGrapics("Old Priests Church");
-            Console.WriteLine("1. Pay " + Players[0].Level * 4 + " to heal 30-60%");
+            Console.WriteLine("1. Pay " + Players[0].Level * 4 + " Gold to heal 30-60%");
             Console.WriteLine("2. Exit");
-            Choice = int.Parse(Console.ReadLine());
+            try
+            {
+                Choice = int.Parse(Console.ReadLine());
+            }
+            catch (Exception)
+            {
+                Choice = 0;
+                Console.Clear();
+            }
             if (Choice == 1 && Players[0].Gold >= Players[0].Level * 4)
             {
                 SpendGold(Players[0].Level * 4);
@@ -371,6 +388,18 @@ namespace TheGame421
 
             
             LevelUp();
+            if (Players[0].Level == 10)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.WriteLine("CONGRATULATION YOU WON THE GAME");
+                Players.Remove(Players[0]);
+                
+                CreatePlayer();
+                Console.ResetColor();
+
+            }
             PressSomething();
             Monsters.Remove(Monsters[0]);
         }
@@ -433,7 +462,15 @@ namespace TheGame421
                 Console.WriteLine("    4. Exit");
             Console.WriteLine("             Shop Gold: " + Shops[0].Gold);
             Console.Write("Enter item number you wanna buy: ");
-            Choice = int.Parse(Console.ReadLine());
+            try
+            {
+                Choice = int.Parse(Console.ReadLine());
+            }
+            catch (Exception)
+            {
+                Choice = 0;
+                Console.Clear();
+            }
             if (Choice == 1 && Shops[0].AmuletOfStrength.Equals(true) && Players[0].Gold >= 100)
             {
                 Shops[0].AmuletOfStrengthAmount -= 1;
@@ -448,6 +485,12 @@ namespace TheGame421
                 Players[0].Strength += 5;
                 Players[0].Gold -= 100;
                 Shops[0].Gold += 100;
+
+            }
+            else if(Choice == 1 && Players[0].Gold < 100)
+            {
+                Console.WriteLine("You don't have enough gold. Go kill some monsters");
+                PressSomething();
 
             }
             if (Choice == 2 && Shops[0].AmuletOfToughness.Equals(true) && Players[0].Gold >= 100)
@@ -466,6 +509,12 @@ namespace TheGame421
                 Shops[0].Gold += 100;
 
             }
+            else if (Choice == 2 && Players[0].Gold < 100)
+            {
+                Console.WriteLine("You don't have enough gold. Go kill some monsters");
+                PressSomething();
+
+            }
 
             if (Choice == 3 && Shops[0].HealingSword.Equals(true) && Players[0].Gold >= 100)
             {
@@ -475,6 +524,11 @@ namespace TheGame421
                 Shops[0].Gold += 100;
 
 
+            }
+            else if (Choice == 3 && Players[0].Gold < 100)
+            {
+                Console.WriteLine("You don't have enough gold. Go kill some monsters");
+                PressSomething();
             }
 
         }
@@ -497,7 +551,16 @@ namespace TheGame421
                 Console.WriteLine("    4. Exit");
             Console.WriteLine("             Shop Gold: " + Shops[0].Gold);
             Console.Write("Enter item number you wanna Sell: ");
-            Choice = int.Parse(Console.ReadLine());
+
+            try
+            {
+                Choice = int.Parse(Console.ReadLine());
+            }
+            catch (Exception)
+            {
+                Choice = 0;
+                Console.Clear();
+            }
             if (Choice == 1 && Players[0].AmuletOfStrength.Equals(true) && Shops[0].Gold >= 100 && Players[0].AmuletOfStrengthAmount >= 1)
             {
                 Players[0].AmuletOfStrengthAmount -= 1;
@@ -513,6 +576,12 @@ namespace TheGame421
                 Shops[0].AmuletOfStrengthAmount += 1;
                 Shops[0].Gold -= 100;
                 Players[0].Gold += 100;
+
+            }
+            else if (Choice == 1 && Players[0].AmuletOfStrength.Equals(false))
+            {
+                Console.WriteLine("You don't have that item");
+                PressSomething();
 
             }
             if (Choice == 2 && Players[0].AmuletOfToughness.Equals(true) && Shops[0].Gold >= 100 && Players[0].AmuletOfToughnessAmount >= 1)
@@ -531,8 +600,14 @@ namespace TheGame421
                 Players[0].Gold += 100;
 
             }
+            else if (Choice == 2 && Players[0].Toughness.Equals(false))
+            {
+                Console.WriteLine("You don't have that item");
+                PressSomething();
 
-            
+            }
+
+
             if (Choice == 3 && Players[0].HealingSword.Equals(true) && Shops[0].Gold >= 100)
             {
                 Players[0].HealingSword = false;
@@ -540,6 +615,12 @@ namespace TheGame421
                 Shops[0].Gold -= 100;
                 Players[0].Gold += 100;
 
+
+            }
+            else if (Choice == 3 && Players[0].HealingSword.Equals(false))
+            {
+                Console.WriteLine("You don't have that item");
+                PressSomething();
 
             }
 
@@ -783,6 +864,59 @@ namespace TheGame421
             Console.Write(CText);
             Console.ResetColor();
             Console.WriteLine(Text2);
+        }
+
+        public void StartGame()
+        {
+            TheGame Start = new TheGame();
+            int MenuChoice = 0;
+            
+            CreateShop();
+            CreatePlayer();
+            while (true)
+            {
+                Console.Clear();
+                GraphicMeny();
+                Console.Write("Enter Choice: ");
+                try
+                {
+                    MenuChoice = int.Parse(Console.ReadLine());
+                }
+                catch (Exception)
+                {
+                    MenuChoice = 0;
+                    Console.Clear();
+                }
+                switch (MenuChoice)
+                {
+
+                    case 1:
+                        GoAdventureChoice();
+                        
+
+                        break;
+                    case 2:
+                        ShowPlayerInfo2();
+                        break;
+                    case 3:
+                        ShopChoice();
+                        break;
+                    case 4:
+                        HealChoice();
+                        break;
+                    case 5:
+                        GameLevels();
+                        break;
+                    default:
+                        MenuChoice = 0;
+                        break;
+
+
+
+
+                }
+
+            }
         }
     }
 }
