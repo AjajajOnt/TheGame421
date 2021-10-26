@@ -352,14 +352,22 @@ namespace TheGame421
                 Players[0].Gold += Monsters[0].Gold;
                 Players[0].Exp += Monsters[0].Exp;
             }
-            else
+            else if (Players[0].Health <= 0)
             {
                 Players.Remove(Players[0]);
                 Console.Clear();
                 Console.WriteLine("You died and lost the game.");
                 CreatePlayer();
             }
-            if(Players)
+            if(Players[0].Level == 10)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.WriteLine("CONGRATULATION YOU WON THE GAME");
+                Players.Remove(Players[0]);
+                CreatePlayer();
+
+            }
 
             
             LevelUp();
