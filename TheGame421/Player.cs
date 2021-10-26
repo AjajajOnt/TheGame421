@@ -57,12 +57,6 @@ namespace TheGame421
         public int AmuletOfToughnessAmount { get; set; }
         public int MaxExpThisLevel { get; set; }
 
-        public bool EliteMonster
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public bool EliteMonster { get; set; }
     }
     }
