@@ -472,6 +472,8 @@ namespace TheGame421
                 Players[0].Strength += 5;
                 Players[0].Gold -= 100;
                 Shops[0].Gold += 100;
+                Console.WriteLine("You bought an Amulet Of Strength. You now do 10% more damage for each amulet you have.");
+                PressSomething();
             }
             else if (Choice == 1 && Players[0].Gold < 100)
             {
@@ -492,6 +494,8 @@ namespace TheGame421
                 Players[0].Toughness += 2;
                 Players[0].Gold -= 100;
                 Shops[0].Gold += 100;
+                Console.WriteLine("You bought an Amulet Of Toughness. You now take 10% less damage for each amulet you have.");
+                PressSomething();
             }
             else if (Choice == 2 && Players[0].Gold < 100)
             {
@@ -505,6 +509,8 @@ namespace TheGame421
                 Players[0].HealingSword = true;
                 Players[0].Gold -= 100;
                 Shops[0].Gold += 100;
+                Console.WriteLine("You bought the Healing Sword. You now heal 50% of the damage you do.");
+                PressSomething();
             }
             else if (Choice == 3 && Players[0].Gold < 100)
             {
@@ -555,6 +561,8 @@ namespace TheGame421
                 Shops[0].AmuletOfStrengthAmount += 1;
                 Shops[0].Gold -= 100;
                 Players[0].Gold += 100;
+                Console.WriteLine("You sold an item");
+                PressSomething();
             }
             else if (Choice == 1 && Players[0].AmuletOfStrength.Equals(false))
             {
@@ -575,6 +583,8 @@ namespace TheGame421
                 Shops[0].AmuletOfToughnessAmount += 1;
                 Shops[0].Gold -= 100;
                 Players[0].Gold += 100;
+                Console.WriteLine("You sold an item");
+                PressSomething();
             }
             else if (Choice == 2 && Players[0].Toughness.Equals(false))
             {
@@ -588,6 +598,8 @@ namespace TheGame421
                 Shops[0].HealingSword = true;
                 Shops[0].Gold -= 100;
                 Players[0].Gold += 100;
+                Console.WriteLine("You sold an item");
+                PressSomething();
             }
             else if (Choice == 3 && Players[0].HealingSword.Equals(false))
             {
@@ -621,6 +633,11 @@ namespace TheGame421
             }
             damage = Ran.Next(Monsters[0].Damage / 3, Monsters[0].Damage);
             Players[0].Health -= damage;
+
+            if (Players[0].Health < 0)
+            {
+                Players[0].Health = 0;
+            }
 
             RedDamageText(Monsters[0].Name, " Attacks ", Players[0].Name, " for ", damage.ToString(), " damage. Health Left: ", Players[0].Health.ToString(), "/", Players[0].MaxHealth.ToString());
         }
