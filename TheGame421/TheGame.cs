@@ -5,23 +5,25 @@ namespace TheGame421
 {
     public class TheGame
     {
+        private bool Dead = false;
+        private bool Exit = false;
         private int Choice = 0;
         private int Chance = 0;
-        private List<Player> Players = new List<Player>();
-        private List<SpecificMonster> Monsters = new List<SpecificMonster>();
-        private List<Shop> Shops = new List<Shop>();
+        private readonly List<Player> Players = new List<Player>();
+        private readonly List<SpecificMonster> Monsters = new List<SpecificMonster>();
+        private readonly List<Shop> Shops = new List<Shop>();
 
         internal void CreateShop() //Skapar en shop
-        { 
-            Shop TheShop = new Shop();
-            TheShop.AmuletOfStrength = true;
-            TheShop.AmuletOfStrengthAmount = 5;
-            TheShop.AmuletOfToughness = true;
-            TheShop.AmuletOfToughnessAmount = 5;
-            TheShop.Gold = 1000;
-            TheShop.HealingPotion = true;
-            TheShop.PotionAmount = 5;
-            TheShop.HealingSword = true;
+        {
+            Shop TheShop = new Shop
+            {
+                AmuletOfStrength = true,
+                AmuletOfStrengthAmount = 5,
+                AmuletOfToughness = true,
+                AmuletOfToughnessAmount = 5,
+                Gold = 1000,
+                HealingSword = true
+            };
             Shops.Add(TheShop);
         }
 
@@ -42,7 +44,7 @@ namespace TheGame421
 
         public void GoAdventureChoice() // Går ut på äventyr
         {
-            var Ran = new Random();
+            Random Ran = new Random();
             Chance = Ran.Next(1, 100);
             if (Chance >= 90)
             {
@@ -58,7 +60,7 @@ namespace TheGame421
         public void PlayerAttack() // Spelaren attackerar
         {
             int damage = 0;
-            var Ran = new Random();
+            Random Ran = new Random();
 
             if (Players[0].HealingSword.Equals(true)) // Använder ett svärd som healar dig om du har köpt det
             {
@@ -72,7 +74,7 @@ namespace TheGame421
                     Players[0].Health = Players[0].MaxHealth;
                 }
                 RedDamageText2(Players[0].Name, " Attacks ", Monsters[0].Name, " for ", damage.ToString(), " damage. Health Left: ", Monsters[0].Health.ToString(), "/", Monsters[0].MaxHealth.ToString());
-                GreenHealText("Your sword heals you for ", (damage / 2).ToString(), " Health");
+                GreenHealText("Your sword heals you for ", (damage / 2).ToString(), " Health, ", Players[0].Health.ToString(), "/", Players[0].MaxHealth.ToString());
             }
             else
             {
@@ -191,7 +193,7 @@ namespace TheGame421
         public void CreateEliteMonster(string MonsterName) // Skapar ett elite monster
         {
             SpecificMonster NewMonster = new SpecificMonster();
-            var Ran = new Random();
+            Random Ran = new Random();
             NewMonster.Name = MonsterName;
             NewMonster.Health = Players[0].MaxHealth / 2;
             NewMonster.MaxHealth = NewMonster.Health;
@@ -204,7 +206,7 @@ namespace TheGame421
         public void CreateMonster(string MonsterName) // Skapar ett vanligt monster
         {
             SpecificMonster NewMonster = new SpecificMonster();
-            var Ran = new Random();
+            Random Ran = new Random();
             NewMonster.Name = MonsterName;
             NewMonster.Health = Players[0].MaxHealth / 3;
             NewMonster.MaxHealth = NewMonster.Health;
@@ -217,7 +219,7 @@ namespace TheGame421
         public void CreateLastBoss(string MonsterName) // Skapar en boss som man möter level 9
         {
             SpecificMonster NewMonster = new SpecificMonster();
-            var Ran = new Random();
+            Random Ran = new Random();
             NewMonster.Name = MonsterName;
             NewMonster.Health = Players[0].MaxHealth * 2;
             NewMonster.MaxHealth = NewMonster.Health;
@@ -247,8 +249,8 @@ namespace TheGame421
 
         public string SpawnMonsterOrEliteOrBoss() // Bestämer vilket monster som ska skapas.
         {
-            String MorphedName = "";
-            var Ran = new Random();
+            string MorphedName = "";
+            Random Ran = new Random();
             int RandomNumber = Ran.Next(1, 100);
             int RandomName = Ran.Next(1, 6);
 
@@ -311,8 +313,10 @@ namespace TheGame421
 
         public void Fight() // Fight helt enkelt. Dör man så resetas spelet. Blir man level 10 så vinner man.
         {
+            Dead = false;
+            Choice = 0;
             Console.Clear();
-            var ran = new Random();
+            Random ran = new Random();
             SpawnMonsterOrEliteOrBoss();
             GameLevels();
             Console.WriteLine(Monsters[0].Name + " Has appeared " + "with healthamount: " + Monsters[0].Health);
@@ -337,40 +341,57 @@ namespace TheGame421
             {
                 Players[0].Gold += Monsters[0].Gold;
                 Players[0].Exp += Monsters[0].Exp;
-            }
-            else if (Players[0].Health <= 0)
-            {
-                Players.Remove(Players[0]);
-                Console.Clear();
-                Console.WriteLine("You died and lost the game.");
-                CreatePlayer();
-            }
-            if (Players[0].Level == 10)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkBlue;
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.WriteLine("CONGRATULATION YOU WON THE GAME");
-                Players.Remove(Players[0]);
-                Shops.Remove(Shops[0]);
-                CreateShop();
-                CreatePlayer();
+                ExpAndGoldText("You gained ", Monsters[0].Gold.ToString(), " gold and ", Monsters[0].Exp.ToString(), " Exp");
             }
 
-            LevelUp();
+            if (Dead = false)
+            {
+                LevelUp();
+            }
+
             if (Players[0].Level == 10)
             {
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.DarkBlue;
                 Console.BackgroundColor = ConsoleColor.White;
                 Console.WriteLine("CONGRATULATION YOU WON THE GAME");
+                PressSomething();
                 Players.Remove(Players[0]);
                 Shops.Remove(Shops[0]);
-                CreateShop();
-                CreatePlayer();
+                PlayAgainOrExit();
+
                 Console.ResetColor();
+            }
+
+            if (Players[0].Health <= 0)
+            {
+                Players.Remove(Players[0]);
+                Shops.Remove(Shops[0]);
+                Dead = true;
+                Console.Clear();
+                Console.WriteLine("You died and lost the game.");
+                PlayAgainOrExit();
             }
             PressSomething();
             Monsters.Remove(Monsters[0]);
+        }
+
+        private void PlayAgainOrExit()
+        {
+            Console.WriteLine("Do you want to play again or exit?");
+            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("1. Play again");
+            Console.WriteLine("2. Exit");
+            Choice = TryCatch(Choice);
+            if (Choice == 1)
+            {
+                CreateShop();
+                CreatePlayer();
+            }
+            else
+            {
+                Exit = true;
+            }
         }
 
         public void LevelUp() // Höjer spelarens level om man har tillräckligt med exp.
@@ -386,7 +407,7 @@ namespace TheGame421
             }
         }
 
-        private void WhiteBGWithBlackText(string Text) 
+        private void WhiteBGWithBlackText(string Text)
         {
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
@@ -492,7 +513,7 @@ namespace TheGame421
             }
         }
 
-        public void SellStuff() // Sälj meny
+        public void SellStuff() // Sälj meny, här finns det två amulet typer och ett svärd som healar spelaren när man gör skada.
         {
             TextGrapics("What do you want to Sell?");
             if (Players[0].AmuletOfStrength.Equals(true) && Players[0].AmuletOfStrengthAmount >= 1)
@@ -575,16 +596,16 @@ namespace TheGame421
             }
         }
 
-        public void PressSomething()
+        public void PressSomething() // Pause i consolen
         {
             Console.WriteLine("[Enter to continue.]");
             Console.ReadKey();
         }
 
-        public void MonsterAttack() // Attack som alla monster använder
+        public void MonsterAttack() // Attacken som alla monster använder
         {
             int damage = 0;
-            var Ran = new Random();
+            Random Ran = new Random();
 
             if (Monsters[0].Monster.Equals(true))
             {
@@ -621,7 +642,7 @@ namespace TheGame421
         public void HealUp() // Heala dig genom meny val 4
         {
             int HealingAmount = 0;
-            var Ran = new Random();
+            Random Ran = new Random();
             HealingAmount = Ran.Next(Convert.ToInt32(Players[0].MaxHealth * 0.3), Convert.ToInt32(Players[0].MaxHealth * 0.6));
             Players[0].Health += HealingAmount;
             if (Players[0].Health >= Players[0].MaxHealth)
@@ -786,13 +807,36 @@ namespace TheGame421
             }
         }
 
-        public void GreenHealText(string Text, string CText, string Text2)
+        public void GreenHealText(string Text, string CText, string Text2, string CText7, string Text8, string CText9)
         {
             Console.Write(Text);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(CText);
             Console.ResetColor();
-            Console.WriteLine(Text2);
+            Console.Write(Text2);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(CText7);
+            Console.ResetColor();
+            Console.Write(Text8);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(CText9);
+            Console.ResetColor();
+            Console.WriteLine();
+        }
+
+        public void ExpAndGoldText(string Text, string CText, string Text2, string CText2, string Text3)
+        {
+            Console.WriteLine();
+            Console.Write(Text);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(CText);
+            Console.ResetColor();
+            Console.Write(Text2);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(CText2);
+            Console.ResetColor();
+            Console.Write(Text3);
+            Console.WriteLine("");
         }
 
         public void StartGame() // Startar spelet.
@@ -802,20 +846,12 @@ namespace TheGame421
 
             CreateShop();
             CreatePlayer();
-            while (true)
+            while (Exit == false)
             {
                 Console.Clear();
                 GraphicMeny();
                 Console.Write("Enter Choice: ");
-                try
-                {
-                    MenuChoice = int.Parse(Console.ReadLine());
-                }
-                catch (Exception)
-                {
-                    MenuChoice = 0;
-                    Console.Clear();
-                }
+                MenuChoice = TryCatch(MenuChoice);
                 switch (MenuChoice)
                 {
                     case 1:
@@ -836,7 +872,7 @@ namespace TheGame421
                         break;
 
                     case 5:
-                        GameLevels();
+                        Exit = true;
                         break;
 
                     default:
@@ -844,6 +880,21 @@ namespace TheGame421
                         break;
                 }
             }
+        }
+
+        private static int TryCatch(int Choose)
+        {
+            try
+            {
+                Choose = int.Parse(Console.ReadLine());
+            }
+            catch (Exception)
+            {
+                Choose = 0;
+                Console.Clear();
+            }
+
+            return Choose;
         }
     }
 }

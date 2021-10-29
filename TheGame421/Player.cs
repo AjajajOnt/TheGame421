@@ -16,8 +16,6 @@
 
         public bool AmuletOfToughness { get; set; }
 
-        public bool HealingPotion { get; set; }
-
         public bool HealingSword { get; set; }
 
         public int Strength { get; set; }
@@ -27,14 +25,6 @@
         public bool Monster { get; set; }
 
         public bool LastBoss { get; set; }
-
-        public bool GameLevel1 { get; set; }
-
-        public bool GameLevel2 { get; set; }
-
-        public bool GameLevel3 { get; set; }
-
-        public bool GameLevel4 { get; set; }
 
         public int MaxHealth { get; set; }
 

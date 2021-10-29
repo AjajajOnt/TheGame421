@@ -3,7 +3,7 @@
   <Class Name="TheGame421.TheGame">
     <Position X="2.75" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>CABAFIEBAAAIAQ4oMgEQABAhEAggDAwAAAEAAAAUIEA=</HashCode>
+      <HashCode>CABAFIEAAAAIAQ4oMgEQABAhAAggDAwEAAEAAAAUIEA=</HashCode>
       <FileName>TheGame.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -18,12 +18,12 @@
   <Class Name="TheGame421.Player">
     <Position X="6.75" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>QQACCACCIAFaKABAAIAAEAQAAgBAAAABAkAAAAABEAE=</HashCode>
+      <HashCode>AQACCACCIAEAKABAAAAAAAQAAgBAAAABAkAAAAABAAE=</HashCode>
       <FileName>Player.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TheGame421.Shop">
-    <Position X="9.5" Y="4.5" Width="1.5" />
+    <Position X="9.5" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Shop.cs</FileName>
